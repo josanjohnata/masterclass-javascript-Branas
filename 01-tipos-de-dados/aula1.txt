@@ -1,0 +1,35 @@
+# VARIÁVEIS
+## var, let e const
+
+As variáveis tem um ciclo de vida: Declaração, Inicialização e Atribuição
+- Declaração: O nome da variável é registrado no contexto de execução, também conhecido como escopo, da função.
+- Inicialização: A variável é inicializada com o valor undefined.
+- Atribuição: Um valor é atribuído para a variável.
+
+Ao utilizar var, a variável é declarada e inicializada no escopo da função, não respeitando bloco e permitindo a redeclaração e reatribuição.
+
+var pi = 3.141592;
+console.log(pi);
+
+Ao utilizar let, a variável é declarada no escopo da função mas só é inicializada posteriormente, respeitando bloco e permitindo reatribuição mas não a redeclaração.
+
+let pi = 3.141592;
+console.log(pi);
+
+Ao utilizar const, a variável é declarada no escopo da função mas só é inicializada posteriormente, respeitando bloco e não permitindo reatribuição nem redeclaração.
+
+const pi = 3.141592;
+console.log(pi);
+
+Ao declarar uma variável sem var, let ou const ela é criada no escopo global. ENTÃO, NUNCA DECLARE VARIÁVEIS SEM VAR, LET E CONST E EVITE A UTILIZAÇÃO DE VAR.
+
+Um identificador válido deve comçar com [a-zA-Z_$] seguido por [a-zA-Z0-9_$].
+
+let name;
+let Name;
+let _name;
+let $name;
+let name123;
+let Name123;
+let _name123;
+let $name123;
