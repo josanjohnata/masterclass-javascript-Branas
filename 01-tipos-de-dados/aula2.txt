@@ -1,0 +1,38 @@
+# Tipos de dados
+
+## Os tipos de dados na linguagem JavaScript se dividem em primitivos e objetos.
+- Os primitivos são imutáveis, ou seja, ao longo do tempo seu valor não é alterado.
+  - number
+  - string
+  - boolean
+  - symbol
+  - null
+  - undefined
+
+  * typeof (serve para ver o tipo de dado envolvido)
+  * instanceof (serve para dizer que um object é uma instância de date ou array)
+Exemplo de typeof:
+  - typeof 10;
+    'number'
+  - typeof 'JavaScript';
+    'string'
+  - typeof false;
+    'boolean'
+  - typeof Symbol();
+    'symbol'
+  - typeof null; (por algum motivo estranho ele retorna object)
+    'object'
+  - typeof undefined;
+    'undefined'
+
+## Os objetos são valortes que representam uma referência em memória que pode ser alterada.
+  - typeof object sum (a,b) {return a + b};
+    'object'
+  - typeof {name: 'Linus Torvald'};
+    'object'
+  - typeof [1,2,3,4,5,6,7,8,9];
+    'object'
+  - typeof /[a-zA-Z_$]/;
+    'object'
+  - typeof new Date();
+    'object'
