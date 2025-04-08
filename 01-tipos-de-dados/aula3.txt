@@ -38,3 +38,81 @@
            (123.4).toFixed(10) -> '123.4000000000'
            (10).toFixed(2) -> '10,00'
            (123.4).toPrecision(10) -> '123,4000000'
+
+# Operadores Numéricos
+
+  - Operadores aritméticos (+, -, *, / e %)
+    - 2 + 2; -> 4
+    - 8 - 3; -> 5
+    - 4 * 5; -> 20
+    - 9 / 3; -> 3
+    - 7 % 2; -> 1 (resto da divisão)
+  - Operadores de atribuição (+=, -=, *=, /= e %=)
+    let result = 10;
+    - result += 2; -> 12
+    - result -= 5; -> 7
+    - result *= 8; -> 56
+    - result /= 2; -> 8
+    - result% = 6; -> 4
+  - Operadores de incremento e decremento (++ e --), existe o pós e o pré incremento/decremento, onde o pós ele
+  retorna primeiro e depois incrementa/decrementa e o pré incrementa/decrementa primeiro e depois retorna.
+    let result = 10;
+    - result++ -> 10
+      result -> 11
+    - ++result -> 12
+    - result-- -> 12
+      result -> 11
+    - --result -> 10
+  - Operadores binários (|, &, ^, ~, <<, >> e >>>)
+    - | or, o or compara bit a bit e sempre que for 0 ou 1 o resultado é 1
+      - 4 | 3 -> 7
+      - (4).toString(2).padStart(32,0);
+        '00000000000000000000000000000100'
+        (3).toString(2).padStart(32,0);
+        '00000000000000000000000000000011'
+        depois de compara os bits o resultado fica
+        '00000000000000000000000000000111'
+        quando é convertido para decimal fica: 0b111 -> 7
+    - & and, o and compara bit a bit e só retorna 1 quando for 1 com 1
+      - 3 & 1 -> 1
+      - (3).toString(2).padStart(32,0);
+        '00000000000000000000000000000011'
+        (1).toString(2).padStart(32,0);
+        '00000000000000000000000000000001'
+        depois de compara os bits o resultado fica
+        '00000000000000000000000000000001'
+        quando é convertido para decimal fica: 0b1 -> 1
+    - ^ xor, o ou exclusivo tem uma caracteristica diferente, somente 1 com 0 da 1, 1 com 1 da 0 e 0 com 0 da 0
+      - 5 ^ 2 -> 7
+      - (5).toString(2).padStart(32,0);
+        '00000000000000000000000000000101'
+        (2).toString(2).padStart(32,0);
+        '00000000000000000000000000000010'
+        depois de compara os bits o resultado fica
+        '00000000000000000000000000000111'
+        quando é convertido para decimal fica: 0b111 -> 7
+    - ~ not, o not inverte todos os bits incluindo o bit de sinal
+      - ~2 -> -3
+      - (2).toString(2).padStart(32,0);
+        '00000000000000000000000000000010'
+        (-3).toString(2).padStart(32,0);
+        '1111111111111111111111111111101'
+    - << deslocando para esquerda, é o mesmo que uma multiplicação por 2, movendo o bit para a esquerda quantas casas forem determinadas
+      - 4 << 2 -> 16
+       - (4).toString(2).padStart(32,0);
+        '00000000000000000000000000000100'
+        (16).toString(2).padStart(32,0);
+        '00000000000000000000000000010000'
+    - >> deslocando para direita, é o mesmo que uma divisição por 2, movendo o bit para a direita quantas casas forem determinadas
+      - 128 >> 1 -> 64
+       - (128).toString(2).padStart(32,0);
+        '00000000000000000000000010000000'
+        (64).toString(2).padStart(32,0);
+        '00000000000000000000000001000000'
+     - >>> rotação que leva o sinal junto, sempre desloca todos os bits uma casa para direita
+      - -2 >>> 1 -> 2147483647
+       - (-2 >>> 0).toString(2).padStart(32,0);
+        '11111111111111111111111111111110'
+        (2147483647).toString(2).padStart(32,0);
+        '11111111111111111111111111111110'
+    OBS.: Cuidado para não confundir os operadores | e & (operador bit a bit) com || e && (operador boolean)
