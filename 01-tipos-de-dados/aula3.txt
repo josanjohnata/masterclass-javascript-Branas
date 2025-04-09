@@ -116,3 +116,40 @@
         (2147483647).toString(2).padStart(32,0);
         '11111111111111111111111111111110'
     OBS.: Cuidado para não confundir os operadores | e & (operador bit a bit) com || e && (operador boolean)
+
+# Conversão Numérica
+  - A forma mais simples de converter um número é por meio da invocação da função construtora Number
+    - Number("10"); -> 10
+    - Number("9.9"); -> 9.9
+    - Number("0xFF"); -> 255
+    - Number("0b10"); -> 2
+    - Number("0o10"); -> 8
+    - Number(); -> 0
+    - Number("JavaScript"); -> NaN
+  - Um outro jeito de realizar conversões é por meio dos operadores Numéricos. Porém, tome CUIDADO, nem todos os
+    operadores numéricos realizam a conversão.
+    - ~~"10"; -> 10
+    - +"10"; -> 10
+    - "10" - 0; -> 10
+    - "10" * 1; -> 10
+    - "10" / 1; -> 10
+    não converte e concatena
+    - "10" + 0; -> '100'
+  - O método toString de um número, permite convertê-lo para qualquer sistema de numeração, bastando indicar qualquer
+    é a base desejada
+      - (0xA).toString(10); -> '10'
+      - (0b1010).toString(16); -> 'a'
+      - (010).toString(2); -> '1000'
+      - (10).toString(8); -> '12'
+  - O método parseInt permite converter uma String para um número. Para isso basta indicar o número e a sua base, que caso
+    não seja informada será 10.
+      - parseInt("10", 10); -> 10
+      - parseInt("9.9", 10); -> 9 (No caso em que tenho casa decimal, a casa decimal se perde por está convertendo para um número inteiro)
+      - parseInt("A", 16); -> 10
+      - parseInt("11", 2); -> 3
+      - parseInt("010", 8); -> 8
+  - O método parseFloat é um pouco mais específico e converte aprenas números no sistem de numeração decimal.
+      - parseFloat("10"); -> 10
+      - parseFloat("9.9"); -> 9.9
+      - parseFloat("0xFF"); -> 0 (Nesse caso ele entendeu penas o primeiro número que foi 0 e ignorou o resto pq ele não sabe que é na base 16)
+      - parseFloat("0b10"); -> 0 (Nesse caso ele entendeu penas o primeiro número que foi 0 e ignorou o resto pq ele não sabe que é na base 2)
