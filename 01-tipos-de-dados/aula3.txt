@@ -174,3 +174,63 @@
       - Math.sqrt(-9); -> NaN
       - Math.log(-1); -> NaN
       - parseFloat('JavaScript'); -> NaN
+
+# Math API
+  - Math é um objeto global que contém constantes matemáticas e métodos para a realização de operações envolvendo números
+  ## CONSTANTES
+    - Math.E; -> 2.718281828459045 (E)
+    - Math.LN10; -> 2.302585092994046 (Logaritmo natural de 10)
+    - Math.LN2; -> 0.6931471805599453 (Logaritmo natural de 2)
+    - Math.LOG10E; -> 0.4342944819032518 (Logaritmo de E na base 10)
+    - Math.LOG2E; -> 1.4426950408889634 (Logaritmo de E na base 2)
+    - Math.PI; -> 3.141592653589793 (PI)
+    - Math.SQRT1_2; -> 0.7071067811865476 (Raiz quadrada de 1/2)
+    - Math.SQRT2; -> 1.4142135623730951 (Raiz quadrada de 2)
+  ## Operações 1
+    - abs: Converte o sinal do número para positivo
+    - ceil: Arredonda o número para cima
+    - floor: Arredonda o número para baixo
+    - round: Arredonda o número para cima se a parte decimal for de 5 a 9 e para baixo se for de 0 a 4
+    - sing: Retorna 1 se o número for positivo e -1 se for negativo
+    - trunc: Elimina a parte decimal do número, tornando-o um inteiro
+    Ex.:
+      - Math.abs(10); -> 10
+      - Math.abs(-10); -> 10
+      - Math.ceil(1.1); -> 2
+      - Math.ceil(-1.1); -> -1
+      - Math.floor(9.9); -> 9
+      - Math.floor(-9.9); -> -10
+      - Math.round(4.5); -> 5
+      - Math.round(-4.5); -> -4
+      - Math.sign(5); -> 1
+      - Math.sign(-5); -> -1
+      - Math.trunc(2.3); -> 2
+      - Math.trunc(-2.3); -> -2
+  ## Operações 2
+    - cbrt: Retorna a raiz cúbida do número
+    - cos: Retorna o coseno de um ângulo
+    - exp: Retorna E elevado a um expoente
+    - hypot: Retorna a raiz quadrada dos quadrados dos números
+    - log: Retorna o logaritmo do número em base natural
+    - pow: Retorna o número elevado a um determinado expoente
+    - sin: Retorna o seno de um ângulo
+    - sqrt: Retorna a raiz quadrada do número
+    - tan: Retorna a tangente de um ângulo
+      Ex:
+        - Math.cbrt(8); -> 2
+        - Math.cos(Math.PI/3); -> 0.5000000000000001
+        - Math.exp(1); -> 2.718281828459045
+        - Math.hypot(3,4); -> 5
+        - Math.log(1); -> 0
+        - Math.pow(2,10); -> 1024
+        - Math.sin(Math.PI/2); -> 1
+        - Math.sqrt(4); -> 2
+        - Math.tan(Math.PI/4); -> 0.9999999999999999
+  ## operações 3
+    - min: Retorna o menor número passado por parâmetro
+    - max: Retorna o maior número passado por parâmetro
+    - random: Retorna um número randômico entre 0 e 1, não incluindo o 1
+      Ex.:
+        - Math.min(1,2,3,4,5,6); -> 1
+        - Math.max(1,2,3,4,5,6); -> 6
+        - Math.floor(Math.random() * 100); -> 38
