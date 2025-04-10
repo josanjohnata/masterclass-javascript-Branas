@@ -4,7 +4,7 @@
  - O JavaScript suporta 4 sistemos de numeração decimal, hexadecimal, binário e octal.
   - O sistema de numeração decimal, de base 10, deve iniciar com um número de 1 a 9, seguido por
     números de 0 a 9 com ou sem ponto. indicando se é inteiro ou decimal.
-  - O istema de numeração hexadecimal, de base 16, deve iniciar com 0x ou 0X, seguido por números
+  - O sistema de numeração hexadecimal, de base 16, deve iniciar com 0x ou 0X, seguido por números
     de 0 a 9 e letras de A as F.
   - O sistema de numeração binário, de base 2, de iniciar com 0b ou 0B, seguido por números de 0 a 1.
   - O sistema de numeração octal, de base 8, deve iniciar com 0, 0o ou 0O seguido po números de 0 a 7.
@@ -103,7 +103,7 @@
         '00000000000000000000000000000100'
         (16).toString(2).padStart(32,0);
         '00000000000000000000000000010000'
-    - >> deslocando para direita, é o mesmo que uma divisição por 2, movendo o bit para a direita quantas casas forem determinadas
+    - >> deslocando para direita, é o mesmo que uma divisão por 2, movendo o bit para a direita quantas casas forem determinadas
       - 128 >> 1 -> 64
        - (128).toString(2).padStart(32,0);
         '00000000000000000000000010000000'
@@ -148,8 +148,29 @@
       - parseInt("A", 16); -> 10
       - parseInt("11", 2); -> 3
       - parseInt("010", 8); -> 8
-  - O método parseFloat é um pouco mais específico e converte aprenas números no sistem de numeração decimal.
+  - O método parseFloat é um pouco mais específico e converte apenas números no sistema de numeração decimal.
       - parseFloat("10"); -> 10
       - parseFloat("9.9"); -> 9.9
-      - parseFloat("0xFF"); -> 0 (Nesse caso ele entendeu penas o primeiro número que foi 0 e ignorou o resto pq ele não sabe que é na base 16)
-      - parseFloat("0b10"); -> 0 (Nesse caso ele entendeu penas o primeiro número que foi 0 e ignorou o resto pq ele não sabe que é na base 2)
+      - parseFloat("0xFF"); -> 0 (Nesse caso ele entendeu apenas o primeiro número que foi 0 e ignorou o resto pq ele não sabe que é na base 16)
+      - parseFloat("0b10"); -> 0 (Nesse caso ele entendeu apenas o primeiro número que foi 0 e ignorou o resto pq ele não sabe que é na base 2)
+
+# IEEE 754
+  - O IEEE 754 é um padrão de representação numérica criado em 1985 e adotado por diversas linguagens de programação como JavaScript, Ruby, Python e Java.
+    - Ao realizar operações com números decimais, podem existir resíduos decorrentes de arredondamento
+      - 0.1 + 0.2; -> 0.30000000000000004
+      - 666.7 - 666.6; -> 0.10000000000002274
+      - 33.3 * 3; -> 99.89999999999999
+      - 12.2 / 0.1; -> 121.99999999999999
+    - Para ver como as representações numéricas com mais clareza visitar o site IEEE 754 Calculator (https://weitz.de/ieee/)
+    - Infinity, que pode ser positivo ou negativo, é retornado quando uma operação ultrapassa os limites do tipo number
+      - 1 / 0;  -> Infinity
+      - Math.pow(10, 1000);  -> Infinity
+      - Number.MAX_VALUE * 2;  -> Infinity
+      - -Number.MAX_VALUE * 2;  -> -Infinity
+      - Math.log(0);  -> -Infinity
+    - NaN, ou Not a Number, é retornado quando realizamos uma operação numérica onde não é possível determinar o resultado
+      - 10 * 'JavaScript'; -> NaN
+      - 0/0; -> NaN
+      - Math.sqrt(-9); -> NaN
+      - Math.log(-1); -> NaN
+      - parseFloat('JavaScript'); -> NaN
