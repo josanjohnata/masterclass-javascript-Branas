@@ -134,3 +134,72 @@
                                       9 - Oct
                                       10 - Nov
                                       11 - Dec
+
+# String API
+  - length: Retorna o tamanho da String
+  - indexOf: Retorna a primeira posição encontrada do caractere passado por parâmetro
+  - lastIndexOf: Retorna a última posição encontrada do caractere passado por parâmetro
+  - toUpperCase: Retorna uma nova String convertendo as letras para maiúsculas
+  - toLowerCase: Retorna uma novas String convertendo as letras para minúsculas
+  Ex.:
+    "JavaScript".length; -> 10
+    "PHP".indexOf("P"); -> 0
+    "PHP".lastIndexOf("P"); -> 2
+    "cobol".toUpperCase(); -> 'COBOL'
+    "ALGOL".toLowerCase(); -> 'algol'
+  - charAt: Retorna o caractere na posição passada por parâmetro
+  - charCodeAt: Retorna o código com base na posição passada por parâmetro
+  - fromCharCode: Retorna um caractere com base no código passado por parâmetro
+  Ex.:
+    "JavaScript".charAt(1); -> 'a'
+    "JavaScript".charCodeAt(1); -> 97
+    String.fromCharCode(97); -> 'a'
+  - includes: Retorna verdadeiro se a String contém a String passada por parâmetro
+  - startsWith: Retorna verdadeiro se a String inicia com a String passada por parâmetro
+  - endsWith: Retorna verdadeiro se a String termina com a String passada por parâmetro
+  Ex.:
+    "JavaScript".includes("Java"); -> true
+    "Ruby".startsWith("R"); -> true
+    "Erlang".endsWith("lang"); -> true
+  - localeCompare: Retorna -1 se a String passada por parâmetro for maior, 0 se for igual e 1 se for menor
+  Ex.: 
+    "C++".localeCompare("Ruby"); -> -1 (sempre que a string que está sendo comparada for menor que a string passada por parâmetro retorna -1)
+    "Python".localeCompare("Java"); -> 1 (sempre que a string que está sendo comparada for maior que a string passada por parâmetro retorna 1)
+    "JavaScript".localeCompare("JavaScript"); -> 0 (sempre que a string que está sendo comparada for igual que a string passada por parâmetro retorna 0)
+  - match: Retorna partes da String com base na RegExp passada por parâmetro
+  - search: Retorna a primeira posição encontrada com base na RegExp passada por parâmetro
+  - replace: Retorna uma nova String resultante da substituição da String ou RegExp passada no primeiro parâmetro pelo segundo parâmetro
+  Ex.: 
+    "C++".match(/\+/g); -> ['+', '+'] (obs.: o match so aceita expressões regulares)
+    "Java".search(/a/); -> 1 (obs.: o search so aceita expressões regulares)
+    "JavaScript".replace("Java", "Ecma"); -> 'EcmaScript'
+    "JavaScript".replace(/a/g, 4); -> 'J4v4Script'
+  - slice: Retorna uma parte da String que está invocando a função iniciado na posição passada no primeiro parâmetro até a posição final passada no segundo parâmetro,
+    ou da posição passada no primeiro parâmetro até o fim caso o segundo parâmetro não seja informado
+  - split: Retorna um array contendo o resultado da divisão da String original de acordo com o critério passado por parâmetro
+  - substring: Similar ao slice, não aceita valores negativos como parâmetro e permite a inversão dos parâmetros
+  Ex.:
+    "JavaScript".slice(0, 4); -> 'Java'
+    "JavaScript".slice(4); -> 'Script'
+    "JavaScript".slice(0, -6); -> 'Java'
+    "JavaScript".slice(-6); -> 'Script'
+    "C;Java;JavaScript;Ruby".split(";"); -> ['C', 'Java', 'JavaScript', 'Ruby']
+    "JavaScript".substring(0, 4); -> 'Java'
+    "JavaScript".substring(4, 0); -> 'Java' (o substring identifica que um parâmetro é maior que o outro e inverte os valores)
+    "JavaScript".substring(4); -> 'Script'
+  - concat: Retorna uma nova String resultante da concatenação da que está invocando a função e da outra, passada por parâmetro
+  - padStart: Completa a String com caracteres no início
+  - padEnd: Completa a String com caracteres no fim
+  - repeat: Repete um caractere
+  - trim: Elimina espaços em branco no início e no fim
+  - trimLeft: Elimina espaços em branco no início
+  - trimRight: Elimina espaços em branco no fim
+  Ex.:
+    "Java".concat("Script"); -> 'JavaScript'
+    "Data".concat("Flex"); -> 'DataFlex'
+    "Script".padStart(10, "Java"); -> 'JavaScript'
+    "C".padEnd(3, "+"); -> 'C++'
+    "C".concat("+".repeat(2)); -> 'C++'
+    " Self ".trim(); -> 'Self'
+    " Scheme ".trimLeft(); -> 'Scheme '
+    " Perl ".trimRight(); -> ' Perl'
