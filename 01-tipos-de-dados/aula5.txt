@@ -1,0 +1,26 @@
+# Boolean
+  - O tipo Boolean é primitivo, imutável e representado pelas palavras reservadas true e false
+    - true -> true
+    - false -> false
+    - typeof true -> 'boolean'
+    - typeof false -> 'boolean'
+    - new Boolean(true); -> [Boolean: true]
+    - new Boolean(false); -> [Boolean: false]
+    - typeof new Boolean(true); -> 'object'
+  - Cuidado com a coersão de tipo!
+    - A coersão de tipo acontece quando um tipo de dado é utilizado em um contexto onde ele é convertido de forma implícita ou explícita
+    - !!0; -> false
+    - !!NaN; -> false
+    - !!""; -> false
+    - !!false -> false
+    - !!undefined; -> false
+    - !!null; -> false
+      - Apenas esses 6 valores acima são false todo o resto é true
+    - !!-10; -> true
+    - !!'JavaScript'; -> true
+    - !!{}; -> true
+    - !![]; -> true
+    - !!/JavaScript/; -> true
+    - !!new Date(); -> true
+    - !!function () {}; -> true
+    
