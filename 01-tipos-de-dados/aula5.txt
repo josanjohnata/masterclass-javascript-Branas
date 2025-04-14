@@ -23,4 +23,88 @@
     - !!/JavaScript/; -> true
     - !!new Date(); -> true
     - !!function () {}; -> true
+
+# Operadores Booleanos
+  - Operadores de comparação ==, ===, !=, !==, <, >, <= e >=
+    - 1 == 2; -> false
+    - 10 === 10; -> true
+    - 'a' != 'b'; -> true
+    - 3 !== 2; -> true
+    - 6 > 7; -> false
+    - 5 >= 5; -> true
+    - 'z' < 'x'; -> false
+    - 'c' <= 'c'; -> true
+  - Cuidado com os operadores de comparação == e !=
+    - 0 == ''; -> true
+    - 0 == '0'; -> true
+    - false == undefined; -> false
+    - false == null; -> false
+    - null == undefined; -> true
+    - 1 == true; -> true
+    - 0 == false; -> true
+    - 0 == '\n'; -> true
+  - Prefira sempre a utilização dos operadores === e !==
+    - 0 === ''; -> false
+    - 0 === '0'; -> false
+    - false === undefined; -> false
+    - false === null; -> false
+    - null === undefined; -> false
+    - 1 === true; -> false
+    - 0 === false; -> false
+    - 0 === '\n'; -> false
+  - Operadores lógicos || e &&
+    - 0 || 2; -> 2
+    - 1 || 2; -> 1
+    - 1 && 2; -> 2
+    - 0 && 2; -> 0
+      Ex.:
+        function generateSerial (max) {
+            return Math.floor(Math.random() * max);
+        }
+
+        generateSerial(10); -> 6
+        generateSerial(100); -> 27
+        generateSerial(1000); -> 455
+        generateSerial(); -> NaN
+        --------------------------------------
+        Para garantir que não retorne NaN, essa maneira funciona, mas não é a mais indicada.
+        function generateSerial (max) {
+            if (max === undefined) {
+                max = 1000;
+            }
+            return Math.floor(Math.random() * max);
+        }
+
+        generateSerial(10);
+        generateSerial(100);
+        generateSerial(1000);
+        generateSerial();
+        --------------------------------------
+        Para garantir que não retorne NaN, essa maneira é a mais indicada, mas ainda da pra melhorar.
+
+        function generateSerial (max) {
+            if (!max) {
+                max = 1000;
+            }
+            return Math.floor(Math.random() * max);
+        }
+
+        generateSerial(10);
+        generateSerial(100);
+        generateSerial(1000);
+        generateSerial();
+        --------------------------------------
+        Para garantir que não retorne NaN, essa maneira indica que você tem um ótimo conhecimento da linguagem JavaScript.
+        function generateSerial (max) {
+            max = max || 1000;
+            return Math.floor(Math.random() * max);
+        }
+
+        generateSerial(10);
+        generateSerial(100);
+        generateSerial(1000);
+        generateSerial();
+  - Operador ternário (expressão) ? true : false
+    - (10) ? 'good' : 'bad'; -> 'good'
+    - (0) ? 'good' : 'bad'; -> 'bad''
     
