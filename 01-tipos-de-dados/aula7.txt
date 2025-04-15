@@ -1,0 +1,118 @@
+# RegExp
+  - As expressões regulares são estruturas formadas por uma sequência de caracteres que especificam um padrão formal que servem para validar,
+    extrair ou mesmo substituir caracteres dentro de uma String
+    Ex.:
+      - /john@gmail.com/
+      ou
+      - new RegExp("john@gmail.com")
+      porém a primeira opção é a mais usada e mais legível
+      - É possível testar se as expressões regulares são válidas
+        Ex.:
+          let regExp = /john@gmail.com/;
+          let result = regExp.test("john@gmail.com");
+          console.log(result); -> true
+      - O RegExp tem uma função exec() que além de válidar a expressão ela também trás mais detalhes
+        Ex.:
+          let regExp = /john@gmail.com/;
+          let result = regExp.exec("john@gmail.com");
+          console.log(result); -> [ 'john@gmail.com', index: 0, input: 'john@gmail.com' ]
+
+# Metacaracteres - Parte 1
+  - . (ponto) Representa qualquer caractere
+    Ex.:
+        let regExp = /john@gmail.com/;
+        let result = regExp.exec("john@gmailxcom"); (se eu trocar o ponto por qualquer caractere ele vai continuar validando)
+        console.log(result); -> [ 'john@gmail.com', index: 0, input: 'john@gmail.com' ]
+## Escapando caracteres especiais
+  - \ A barra é utilizada antes de caracteres especiais, com o objetivo de escapá-los
+    Ex.:
+        let regExp = /john@gmail\.com/; (quando eu escapo o ponto, ele retorna null, nesse caso o ponto não estar representando qualquer caractere)
+        let result = regExp.exec("john@gmailxcom");
+        console.log(result); -> null
+## Iniciando e finalizando com um determinado caractere
+  - ^ - Inicia com um determinado caractere
+    Ex.:
+        let regExp = /^john@gmail\.com/; (Com o ^ no início a expressão tem que começar exatamente igual, se não retorna null)
+        let result = regExp.exec("e-mail: john@gmail.com");
+        console.log(result); -> null
+  - $ - Finaliza com um determinado caractere
+    Ex.:
+        let regExp = /john@gmail\.com$/; (Com o $ no final a expressão tem que terminar exatamente igual, se não retorna null)
+        let result = regExp.exec("e-mail: john@gmail.com ...");
+        console.log(result); -> null
+    Ex.:
+        let regExp = /^john@gmail\.com$/; (E com ambos no início e no final da expressão reconhece somente o que eu determinar)
+        let result = regExp.exec("john@gmail.com");
+        console.log(result); -> [ 'john@gmail.com', index: 0, input: 'john@gmail.com' ]
+## Grupos de caracteres
+  - [abc] - Aceita qualquer caractere dentro do grupo, nesse caso a, b e c
+  - [^abc] - Não aceita qualquer caractere dentro do grupo, nesse caso a, b ou caractere
+  - [0-9] - Aceita qualquer caractere entre 0 e 9
+  - [^0-9] - Não aceita qualquer caractere entre 0 e 9
+
+    Ex.:
+        let regExp = /^[a-z][a-z][a-z][a-z]@gmail\.com$/; (Nesse caso ele deve aceitar uma string com 4 caracteres)
+        let result = regExp.exec("jane@gmail.com");
+        console.log(result); -> [ 'jane@gmail.com', index: 0, input: 'jane@gmail.com' ]
+    Ex.:
+        let regExp = /^[a-z][a-z][a-z][a-z]@gmail\.com$/;
+        let result = regExp.exec("joe@gmail.com");
+        console.log(result); -> null
+## Quantificadores
+  - Os quantificadores podem ser aplicados a caracteres, grupos, conjuntos ou metacaracteres
+  - {n} - Quantifica um número específico
+  - {n,} - Quantifica um número mínimo
+  - {n,m} - Quantifica um número mínimo e um número máximo
+  - ? - Zero ou um
+  - * - Zero ou mais
+  - + - Um ou mais
+    Ex.:
+        let regExp = /^[a-z]{4}@gmail\.com$/;
+        let result = regExp.exec("jane@gmail.com");
+        console.log(result); -> [ 'jane@gmail.com', index: 0, input: 'jane@gmail.com' ]
+    Ex.:
+        let regExp = /^[a-z]{4}@gmail\.com$/;
+        let result = regExp.exec("joe@gmail.com");
+        console.log(result); -> null
+
+    Ex.:
+        let regExp = /^[a-z]{3,4}@gmail\.com$/;
+        let result = regExp.exec("jane@gmail.com");
+        console.log(result); -> [ 'jane@gmail.com', index: 0, input: 'jane@gmail.com' ]
+    Ex.:
+        let regExp = /^[a-z]{3,4}@gmail\.com$/;
+        let result = regExp.exec("joe@gmail.com");
+        console.log(result); -> [ 'jane@gmail.com', index: 0, input: 'jane@gmail.com' ]
+    Ex.:
+        let regExp = /^[a-z]+@gmail\.com$/;
+        let result = regExp.exec("noMinimoUm@gmail.com");
+        console.log(result); -> [ 'noMinimoUm@gmail.com', index: 0, input: 'noMinimoUm@gmail.com' ]
+## Metacaracteres
+  - \w - Representa o conjunto [a-zA-Z0-9_]
+  - \W - Representa o conjunto [^a-zA-Z0-9_]
+  - \d - Representa o conjunto [0-9]
+  - \D - Representa o conjunto [^0-9]
+  - \s - Representa um espaço em branco
+  - \S - Representa um não espaço em branco
+  - \n - Representa uma quebra de linha
+  - \t - Representa um tab
+    Ex.:
+        let regExp = /^\w+@gmail\.com$/;
+        let result = regExp.exec("jane@gmail.com");
+        console.log(result); -> [ 'jane@gmail.com', index: 0, input: 'jane@gmail.com' ]
+    Ex.:
+        let regExp = /^\w+@\w+\.com$/;
+        let result = regExp.exec("joe@gmail.com");
+        console.log(result); -> [ 'jane@gmail.com', index: 0, input: 'jane@gmail.com' ]
+    Ex.:
+        let regExp = /^\w+@\w+(\.\w{2,3})+$/;
+        let result = regExp.exec("noMinimoUm@gmail.com");
+        console.log(result); -> [ 'noMinimoUm@gmail.com', index: 0, input: 'noMinimoUm@gmail.com' ]
+## Grupos de Captura
+  - () - Determina um grupo de captura para realizar a extração de valores de uma determinada String
+    Ex.:
+        let regExp = /^\w+@(\w+)(\.\w{2,3})+$/;
+        let result = regExp.exec("mary@gmail.com");
+        console.log(result[0]); -> mary@gmail.com
+        console.log(result[1]); -> mary
+        console.log(result[2]); -> gmail
