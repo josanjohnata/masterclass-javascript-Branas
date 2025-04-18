@@ -188,3 +188,40 @@
       };
       delete book.available;
       console.log(book) -> {title: 'Clean Code', author: 'Robert C. Martin', pages: 464, language: 'English', available: true}
+
+# Comparação de Objetos
+  - A comparação dos objetos é feita por meio da sua referência, assim, ainda que dois objetos tenham exatamente as mesmas propriedades eles
+    serão considerados diferentes
+    Ex.: 
+      const book1 = {
+        title: "Clean Code",
+        author: "Robert C. Martin"
+      };
+      const book2 = {
+        title: "Clean Code",
+        author: "Robert C. Martin"
+      }
+      console.log(book1 == book2); -> false
+      console.log(book1 === book2); -> false
+      console.log(book1 === book1); -> true (na comparação só vai ser true quando comparo as referências dos dois objetos)
+  - Uma das formas para comparar os objetos é analisando cada uma das suas propriedades por meio da comparação das chaves e valores
+    Ex.: 
+      const book1 = {
+        title: "Clean Code",
+        author: "Robert C. Martin"
+      };
+      const book2 = {
+        title: "Clean Code",
+        author: "Robert C. Martin",
+        pages: 464
+      }
+      let equal = true;
+      for (let key in  book1) {
+        if (book1[key] !== book2[key]) equal = false; (nesse caso o critério de comparação é o book1 por isso é necessário fazer outro laço com o book2)
+      }
+      for (let key in  book2) {
+        if (book1[key] !== book2[key]) equal = false; (assim eu garanto que todas as propriedades do book1 é comparada com o book2 e todas as propriedades do book2 é comparada com o book1)
+      }
+      
+      console.log(equal); false
+  - ATENÇÃO! Para garantir que um objeto é igual ao outro é necessário verificar seus protótipos
