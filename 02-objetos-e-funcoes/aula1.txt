@@ -137,3 +137,54 @@
         book2[key] = book1[key];
       }
       console.log(book2); -> {title: 'Clean Code', author: 'Robert C. Martin', pages: 464, language: 'English', available: true}
+
+# Undefined e Null
+  - O tipo undefined é retornado caso a chave não seja encontrada
+    Ex.:
+      const book = {
+        title: "Clean Code",
+        author: "Robert C. Martin".
+        pages: 464,
+        language: "English",
+        available: true
+      };
+      console.log(book); -> {title: 'Clean Code', author: 'Robert C. Martin', pages: 464, language: 'English', available: true}
+      console.log(book.publisher) -> undefined
+  - Qual é a diferença entre os tipos undefined e null? O undefined indica que a propriedade não existe e o null indica a ausência de valor
+  - É possível consultar uma determinada chave por meio do operador in
+    Ex.:
+      const book = {
+        title: "Clean Code",
+        author: "Robert C. Martin".
+        pages: 464,
+        language: "English",
+        available: true
+      };
+      console.log('title' in book) -> true
+      console.log('author' in book) -> true
+      console.log('pages' in book) -> true
+      console.log('language' in book) -> true
+      console.log('available' in book) -> true
+      console.log('publisher' in book) -> false
+  - Não atribua para undefined ou null com a intenção de apagar uma propriedade
+    Ex.:
+      const book = {
+        title: "Clean Code",
+        author: "Robert C. Martin".
+        pages: 464,
+        language: "English",
+        available: true
+      };
+      book.available = undefined; (nesse caso não estar apagando a propriedade, mas está atribuíndo o valor de undefined, a mesma coisa acontece com null)
+      console.log(book) -> {title: 'Clean Code', author: 'Robert C. Martin', pages: 464, language: 'English', available: true, 'available': undefined}
+  - As propriedades de um objeto podem ser apagadas por meio do operador delete
+    Ex.:
+      const book = {
+        title: "Clean Code",
+        author: "Robert C. Martin".
+        pages: 464,
+        language: "English",
+        available: true
+      };
+      delete book.available;
+      console.log(book) -> {title: 'Clean Code', author: 'Robert C. Martin', pages: 464, language: 'English', available: true}
