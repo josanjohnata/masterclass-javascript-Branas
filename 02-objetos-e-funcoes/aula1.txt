@@ -225,3 +225,111 @@
       
       console.log(equal); false
   - ATENÇÃO! Para garantir que um objeto é igual ao outro é necessário verificar seus protótipos
+
+# Herança
+  - O principal objetivo da herança é permitir o reuso de código por meio do compartilhamento de propriedades entre objetos, evitando a duplicação
+  - Na linguagem JavaScript a herança é realizada entre objetos e não classes
+    Ex.:
+      const functionalLanguage = {
+        paradigm: 'Functional'
+      }
+      const scheme = {
+        name: 'Scheme',
+        year: 1975,
+        __proto__: functionalLanguage
+      };
+      const javascript = {
+        name: 'JavaScript',
+        year: 1995,
+        __proto__: functionalLanguage
+      };
+      console.log(functionalLanguage);
+      console.log(scheme);
+      console.log(javascript);
+  - A propriedade __proto__ é uma referência para o protótipo do objeto
+  - Porque a propriedade paradigm não foi exibida dentro do objeto?
+  - O método hasOwnProperty pode ser utilizado para determinar se uma propriedade pertence ao objeto
+    Ex.:
+      const functionalLanguage = {
+        paradigm: 'Functional'
+      }
+      const scheme = {
+        name: 'Scheme',
+        year: 1975,
+        __proto__: functionalLanguage
+      };
+      const javascript = {
+        name: 'JavaScript',
+        year: 1995,
+        __proto__: functionalLanguage
+      };
+      for (let key in scheme) {
+        console.log(key, scheme.hasOwnProperty(key)); -> name true, year true, paradigm true
+      }
+  - Os métodos Object.setPrototypeOf e Object.getPrototypeOf permitem a interação com o protótipo do objeto
+    Ex.:
+      const functionalLanguage = {
+        paradigm: 'Functional'
+      }
+      const scheme = {
+        name: 'Scheme',
+        year: 1975,
+        Object.setPrototypeOf(scheme, setPrototypeOf);
+      };
+      const javascript = {
+        name: 'JavaScript',
+        year: 1995,
+        Object.setPrototypeOf(javascript, setPrototypeOf);
+      };
+      for (let key in scheme) {
+        console.log(key, scheme.hasOwnProperty(key)); -> name true, year true, paradigm true
+      }
+  - Como o método Object.create é possível criar um objeto passando o seu protótipo por parâmetro
+    Ex.:
+      const functionalLanguage = {
+        paradigm: 'Functional'
+      }
+      const scheme = Object.create(functionalLanguage);
+      scheme.name: 'Scheme',
+      scheme.year: 1975,
+
+      const javascript = Object.create(functionalLanguage);
+      javascript.name: 'JavaScript',
+      javascript.year: 1995,
+
+      for (let key in scheme) {
+        console.log(key, scheme.hasOwnProperty(key)); -> name true, year true, paradigm false
+      }
+  - CUIDADO! Sem o seu protótipo o objeto perde algumas operações importantes
+    Ex.:
+      const functionalLanguage = Object.create(null)
+      functionalLanguage.paradigm: 'Functional'
+
+      const scheme = Object.create(functionalLanguage);
+      scheme.name: 'Scheme',
+      scheme.year: 1975,
+
+      const javascript = Object.create(functionalLanguage);
+      javascript.name: 'JavaScript',
+      javascript.year: 1995,
+
+      for (let key in scheme) {
+        console.log(key, scheme.hasOwnProperty(key)); -> TypeError: scheme.hasOwnProperty is not a function - Esse erro é retornado porque o objeto começou como null e não herdou as protos o Object
+      }
+  - Caso a mesmo propriedade exista no objeto e no seu protótipo, a propriedade do próprio objeto é retornada, fazendo sombra à propriedade do protótipo
+    Ex.:
+      const functionalLanguage = Object.create({})
+      functionalLanguage.paradigm: 'Functional'
+
+      const scheme = Object.create(functionalLanguage);
+      scheme.name: 'Scheme',
+      scheme.year: 1975,
+
+      const javascript = Object.create(functionalLanguage);
+      javascript.name: 'JavaScript',
+      javascript.year: 1995,
+      javascript.paradigm = 'OO'
+
+      console.log(javascript.paradigm); -> name JavaScript, year 1995, paradigm OO
+      console.log(javascript.__proto__.paradigm); -> name JavaScript, year 1995, paradigm Functional
+      console.log(Object.getPrototypeOf(javascript).paradigm); -> name JavaScript, year 1995, paradigm Functional
