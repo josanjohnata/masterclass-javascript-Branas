@@ -1,0 +1,54 @@
+# JSON
+  - JSON, ou JavaScript Object Notation, é um formato de intercâmbio de dados, derivado da linguagem
+    JavaScript que foi descoberto por Douglas Crockford e padronizado pela ECMA-404
+  - Para que serve o JSON? Basicamente ele serve para troca de dados entre sistemas, seja carregando
+    por exemplo, um arquivo de configuração.
+  - Tipos de Dados que o JSON aceita
+    - Number
+    - String
+    - Boolean
+    - Object
+    - Array
+    - null
+  - O método JSON.stringify converte um determinado tipo de dado para JSON
+    Ex.:
+      - JSON.stringify(10); -> '10'
+      - JSON.stringify("JavaScript"); -> '"JavaScript"'
+      - JSON.stringify(true); -> 'true'
+      - JSON.stringify(false); -> 'false'
+      - JSON.stringify({name: "Self", paradigm: "OO"}); -> '{"name":"Self","paradigm":"OO"}'
+      - JSON.stringify([1,2,3,4,5,6,7,8,9]); -> '[1,2,3,4,5,6,7,8,9]'
+      - JSON.stringify(null); -> 'null'
+  - O método JSON.parse converte um JSON para um determinado tipo de dado
+    Ex.:
+      - JSON.parse('10'); -> 10
+      - JSON.parse('"JavaScript"'); -> 'JavaScript'
+      - JSON.parse('true'); -> true
+      - JSON.parse('false'); -> false
+      - JSON.parse('{"name": "Self","paradigm": "OO"}'); -> {name: 'Self', paradigm: 'OO'}
+      - JSON.parse('[1,2,3,4,5,6,7,8,9]'); -> [1,2,3,4,5,6,7,8,9]
+      - JSON.parse('null'); -> null
+
+    Ex.:
+      const book1 = {
+      name: "Refactoring",
+      author: "Martin Fowler"
+      };
+      const book2 = {
+          name: "Refactoring",
+          author: "Martin Fowler"
+      };
+      console.log(book1 === book2); -> false
+      console.log(JSON.stringify(book1) === JSON.stringify(book2)); -> true
+
+      const book1 = {
+          name: "Refactoring",
+          author: "Martin Fowler"
+      };
+      const book2 = {
+          name: "Refactoring",
+          author: "Martin Fowler"
+      };
+      const book3 = JSON.parse(JSON.stringify(book2));
+      console.log(book2 === book3);
+  - CUIDADO! JSON e Object são dois conceitos completamente diferentes
