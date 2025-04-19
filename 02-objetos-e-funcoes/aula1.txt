@@ -333,3 +333,155 @@
       console.log(javascript.paradigm); -> name JavaScript, year 1995, paradigm OO
       console.log(javascript.__proto__.paradigm); -> name JavaScript, year 1995, paradigm Functional
       console.log(Object.getPrototypeOf(javascript).paradigm); -> name JavaScript, year 1995, paradigm Functional
+
+# Object API
+  - O método Object.assign faz a cópia das propriedades dos objetos passados por parâmetro para o objeto alvo, que é retornado
+    Ex.:
+      const javascript = Object.create({});
+      Object.assign(javascript, {
+        name: 'JavaScript',
+        year: 1995,
+        paradigm: 'OO and Functional'
+      });
+      console.log(javascript); -> { name: 'JavaScript', year: 1995, paradigm: 'OO and Functional' }
+    - Também é possível passar outros objetos
+    Ex.:
+      const javascript = Object.create({});
+      Object.assign(javascript, {
+        name: 'JavaScript',
+        year: 1995,
+        paradigm: 'OO and Functional'
+      }, {
+        author: 'Brendan Eich',
+        influencedBy: 'Java, Scheme and self'
+      });
+      console.log(javascript); -> { name: 'JavaScript', year: 1995, paradigm: 'OO and Functional', author: 'Brendan Eich', influencedBy: 'Java, Scheme and self' }
+  - O método Object.keys retorna as chaves das propriedades do objeto
+      Ex.:
+      const javascript = {
+        name: 'JavaScript',
+        year: 1995,
+        paradigm: 'OO and Functional'
+      };
+      console.log(Object.keys(javascript)); -> [ name, year, paradigm ]
+  - O método Object.values retorna os valores das propriedades do objeto
+    Ex.:
+      const javascript = {
+        name: 'JavaScript',
+        year: 1995,
+        paradigm: 'OO and Functional'
+      };
+      console.log(Object.values(javascript)); -> [ 'JavaScript', 1995, 'OO and Functional' ]
+  - O método Object.entries retorna as propriedades do objeto em pares de chave e valor
+    Ex.:
+      const javascript = {
+        name: 'JavaScript',
+        year: 1995,
+        paradigm: 'OO and Functional'
+      };
+      console.log(Object.entries(javascript)); -> [ [ 'name', 'JavaScript' ], [ 'year', 1995 ], ['paradigm', 'OO and Functional' ] ]
+  - O método Object.is compara dois objetos, considerando os tipos de dados, de forma similar ao operador ===
+    Ex.:
+      const javascript = {
+        name: 'JavaScript',
+        year: 1995,
+        paradigm: 'OO and Functional'
+      };
+      console.log(Object.is(javascript, javascript)); -> true
+    Ex.:
+      const javascript = {
+        name: 'JavaScript',
+        year: 1995,
+        paradigm: 'OO and Functional'
+      };
+      const javascript2 = {
+        name: 'JavaScript',
+        year: 1995,
+        paradigm: 'OO and Functional'
+      };
+      console.log(Object.is(javascript, javascript2)); -> false
+  - defineProperty
+    - configurable - Permite que uma determinada propriedade seja apagada
+    - enumerable - Permite que uma determinada propriedade seja enumerada
+    - value - Define o valor de uma determinada propriedade
+    - writable - Permite que uma determinada propriedade tenha seu valor modificado
+    Ex.:
+      const javascript = {};
+      Object.defineProperty(javascript, 'name', {
+        enumerable: true,
+        value: 'JavaScript'
+      }) -> O defineProperty recebe 3 parâmetros, o primero é o objeto em questão, o segundo é o nome da chave/key e o tercero é um objeto que contém os atributos
+      console.log(javascript) -> { nam: 'JavaScript'};
+      console.log(javascript.keys(javascript)) -> [ 'name' ];
+      console.log(javascript.values(javascript)) -> [ 'JavaScript' ];
+      console.log(javascript.entries(javascript)) -> [ [ 'name', 'JavaScript' ] ];
+    Ex.:
+      const javascript = {};
+      Object.defineProperty(javascript, 'name', {
+        enumerable: true,
+        value: 'JavaScript',
+        writable: true
+      })
+      javascript.name = "ECMAScript"; -> Só será possível alterar as propriedades se o writable for true
+      console.log(javascript) -> { nam: 'ECMAScript'};
+      console.log(javascript.keys(javascript)) -> [ 'name' ];
+      console.log(javascript.values(javascript)) -> [ 'ECMAScript' ];
+      console.log(javascript.entries(javascript)) -> [ [ 'name', 'ECMAScript' ] ];
+    Ex.:
+      const javascript = {};
+      Object.defineProperty(javascript, 'name', {
+        enumerable: true,
+        configurable: true,
+        value: 'JavaScript',
+        writable: true
+      })
+      javascript.name = "ECMAScript";
+      delete javascript.name; -> Só será possível apagar alguma propriedade se o configurable for true
+      console.log(javascript) -> {};
+      console.log(javascript.keys(javascript)) -> [];
+      console.log(javascript.values(javascript)) -> [];
+      console.log(javascript.entries(javascript)) -> [];
+  - preventExtensions, seal e freeze
+    - preventExtensions - Impede que o objeto tenha novas propriedades, mas permite modificar ou remover as propriedades existentes
+    - seal - Impede que o objeto tenha novas propriedades ou apague propriedades existentes, mas permite modificar propriedades existentes
+    - freeze - Impede que o objeto tenha novas propriedades, apague ou modifique propriedades existentes
+      Ex.:
+        const javascript = {
+          name: 'JavaScript',
+          year: 1995,
+          paradigm: 'OO and Functional'
+        };
+        Object.preventExtensions(javascript);
+        javascript.name = 'ECMAScript'; -> Nesse caso ele permite reatribuir uma propriedade
+        javascript.author = 'Brendan Eich'; -> Nesse caso ele só ignora, pois não permite criar uma nova propriedade
+        delete javascript.year; -> Nesse caso ele permite deletar propriedades
+        console.log(javascript); -> { name: 'ECMAScript', paradigm: 'OO and Functional'}
+        console.log(Object.isExtensible(javascript)); -> false
+      Ex.:
+        const javascript = {
+          name: 'JavaScript',
+          year: 1995,
+          paradigm: 'OO and Functional'
+        };
+        Object.seal(javascript);
+        javascript.name = 'ECMAScript'; -> Nesse caso ele permite reatribuir uma propriedade
+        javascript.author = 'Brendan Eich'; -> Nesse caso ele só ignora, pois não permite criar uma nova propriedade
+        delete javascript.year; -> Nesse caso ele NÃO permite deletar propriedades
+        console.log(javascript); -> { name: 'ECMAScript', year: 1995, paradigm: 'OO and Functional'}
+        console.log(Object.isExtensible(javascript)); -> false
+        console.log(Object.isSealed(javascript)); -> true
+      Ex.:
+        const javascript = {
+          name: 'JavaScript',
+          year: 1995,
+          paradigm: 'OO and Functional'
+        };
+        Object.freeze(javascript);
+        javascript.name = 'ECMAScript'; -> Nesse caso ele NÃO permite reatribuir uma propriedade
+        javascript.author = 'Brendan Eich'; -> Nesse caso ele só ignora, pois não permite criar uma nova propriedade
+        delete javascript.year; -> Nesse caso ele NÃO permite deletar propriedades
+        console.log(javascript); -> { name: 'JavaScript', year: 1995, paradigm: 'OO and Functional'}
+        console.log(Object.isExtensible(javascript)); -> false
+        console.log(Object.isSealed(javascript)); -> true
+        console.log(Object.isFrozen(javascript)); -> true
+  - CUIDADO! Não é possível alterar o protótipo do objeto, que se torna imutável
