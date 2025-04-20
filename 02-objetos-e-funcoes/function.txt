@@ -1,0 +1,78 @@
+# Function
+  - Uma função é um objeto que contém um bloco de código executável
+    Ex.: 
+      function sum(a, b) { (Essa forma de declarar uma função é conhecida como function declaration)
+        return a + b;
+      };
+      console.log(sum(2, 2)); -> 4
+
+      const sum = function(a, b) { (Essa forma de declarar uma função é conhecida como function expression)
+        return a + b;
+      };
+      console.log(sum(2, 2)); -> 4
+  - Qual é a diferença entre function declaration e expression?
+    - A function declaration pode ser ser invocada antes da declaração e a function expression não permite isso.
+  - Na linguagem JavaScript, as funções são de primeira classe, ou seja, podem ser atribuídas a uma variável,
+    passadas por parâmetro ou serem retornada de uma outra função
+    Ex.: 
+      const sum = function(a, b) {
+        return a + b;
+      }
+
+      const subtract = function(a, b) {
+        return a - b;
+      }
+
+      const calculator = function(fn) {
+        return function(a, b) {
+          return fn(a, b);
+        }
+      }
+
+      console.log(sum(2, 2)); -> 4
+      console.log(subtract(2, 2)); -> 0
+      console.log(calculator(sun)(2, 2)); -> 4
+      console.log(calculator(subtract)(2, 2)); -> 0
+  - É possível invocar uma função com menos ou mais parâmetros, não necessariamente seguindo o que está declarado
+    Ex.: 
+      const sum = function(a, b) {
+        return a + b;
+      }
+      console.log(sum(2, 2)); -> 4
+      console.log(sum(2)); -> NaN -> o JavaScript preenche o segundo parâmetro como undefined, e ao somar 2 + undefined = NaN
+      console.log(sum(2, 2, 3)); -> 4 -> Quando se passa mais parâmetros do que a função está esperando, o JavaScript ignora os demais parâmetros
+  - Podemos definir valores padrão para cada um dos parâmetros de uma função
+    Ex.: 
+      const sum = function(a = 1, b = 1) {
+        return a + b;
+      }
+      console.log(sum(2, 2)); -> 4
+      console.log(sum(2)); -> 3
+      console.log(sum()); -> 2
+  - Por meio da variável implícita arguments é possível acessar os parâmetros da função invocada
+    Ex.:
+      const sum = function() {
+        console.log(arguments);
+      };
+
+      sum(1, 2, 3, 4, 5, 6, 7, 8, 9); -> { '0': 1, '1': 2, '2': 3, '3': 4, '4': 5, '5': 6, '6': 7, '7': 8, '8': 9 }
+    Ex.:
+      const sum = function() {
+        let total = 0;
+        for (let argument in arguments) {
+          total += arguments[argument];
+        }
+        return total;
+      };
+      console.log(sum(1, 2, 3, 4, 5, 6, 7, 8, 9)); -> 45
+  - Também é possível acessar os parâmetros da função invocada por meio do rest parameter
+    Ex.:
+      const sum = function(...numbers) {
+        let total = 0;
+        for (let number of numbers) {
+          total += number;
+        }
+        return total;
+      };
+      console.log(sum(1, 2, 3, 4, 5, 6, 7, 8, 9)); -> 45
+  - CUIDADO! O rest parameter deve ser sempre o último da lista de parâmetros
