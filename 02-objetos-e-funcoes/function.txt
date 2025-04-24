@@ -145,3 +145,39 @@
       rectangle.y = 2;
       console.log(rectangle.area); -> 20
   - CUIDADO! Sempre utilize chaves diferentes para a função setter e a propriedade do objeto
+
+# call, apply e bind
+  - Por meio das operações call e apply é possível invocar uma função passando o this por parâmetro
+    Ex.:
+      const calculateArea = function() {
+        return Math.PI * Math.pow(this.radius, 2);
+      };
+      const circle = {
+        radius: 10,
+        calculateArea
+      };
+      console.log(calculateArea.call(circle)); -> 314.1592653589793
+      console.log(calculateArea.apply(circle)); -> 314.1592653589793
+  - Qual é a diferença entre call e apply? Basicamente a diferença entre ele é a forma de como passar os parâmetros
+    Ex.:
+      const calculateArea = function(fn) {
+        return fn(Math.PI * Math.pow(this.radius, 2));
+      };
+      const circle = {
+        radius: 10,
+        calculateArea
+      };
+      console.log(calculateArea.call(circle, Math.round)); -> 314
+      console.log(calculateArea.apply(circle, [Math.ceil])); -> 314
+  - A operação bind permite encapsular o this dentro da função, retornando-a
+    Ex.:
+      const calculateArea = function(fn) {
+        return fn(Math.PI * Math.pow(this.radius, 2));
+      };
+      const circle = {
+        radius: 10,
+        calculateArea
+      };
+      const calculateAreaForCircle = calculateArea.bind(circle);
+      console.log(calculateAreaForCircle(Math.round)); -> 314
+      console.log(calculateAreaForCircle(Math.ceil)); -> 314
