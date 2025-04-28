@@ -269,3 +269,26 @@
       const person1 = new Person("Linus Torvalds", "Helsinki", 1969);
       const person2 = new Person("Bill Gates", "Seattle", 1955);
   - CUIDADO! Não esqueça de utilizar o operador new quando utilizar funções construtoras
+
+# instanceof
+  - Com o operador instanceof é possível verificar se um objeto foi criado por meio de uma determinada função construtora 
+    analisando a sua cadeia de protótipos
+    Ex.: 
+      const date = new Date();
+      console.log(date instanceof Date); -> true
+      console.log(date instanceof Object); -> true
+      console.log(date instanceof Array); -> false
+  - Qual é a diferença entre o typeof e o instanceof?
+    - O typeof revela o tipo de dado de uma determinada variável
+      Ex.:
+        console.log(typeof date); -> object
+    // Script do instanceof
+    const _instanceof = function(obj, fh) {
+      if (obj === fn.prototype) return true
+      if (obj === null) return false;
+      return _instanceof();
+    }
+    const date = new Date();
+    console.log(date _instanceof Date); -> true
+    console.log(date _instanceof Object); -> true
+    console.log(date _instanceof Array); -> false
