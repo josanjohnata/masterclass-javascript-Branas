@@ -181,3 +181,91 @@
       const calculateAreaForCircle = calculateArea.bind(circle);
       console.log(calculateAreaForCircle(Math.round)); -> 314
       console.log(calculateAreaForCircle(Math.ceil)); -> 314
+
+# new
+  Ex.: 
+    const person1 = {
+      name: "Linus Torvalds",
+      city: "Helsinki",
+      year: 1969,
+      getAge() {
+        return (new Date()).getFullYear() - this.year;
+      }
+    };
+    const person2 = {
+      name: "Bill Gates",
+      city: "Seattle",
+      year: 1955,
+      getAge() {
+        return (new Date()).getFullYear() - this.year;
+      }
+    };
+    console.log(person1);
+    console.log(person1.getAge());
+    console.log(person2);
+    console.log(person2.getAge());
+  - Como fazer para criar um objeto a partir da mesma estrutura?
+  - A função fábrica, que é um tipo de padrão, retorna um novo objeto após ser invocada diretamente
+    Ex.:
+      const createPerson = function(name, city, year) {
+        return {
+            name,
+            city,
+            year,
+            getAge() {
+              return (new Date()).getFullYear() - this year;
+            }
+        };
+      };
+      const person1 = createPerson("Linus Torvalds", "Helsinki", 1969);
+      const person2 = createPerson("Bill Gates", "Seattle", 1955);
+  - O que fazer para eliminar a duplicação e reusar propriedades entre os objetos?
+    Ex.:
+      const personPrototype = {
+        getAge() {
+          return (new Date()).getFullYear() - this year;
+        }
+      };
+      const createPerson = function(name, city, year) {
+        const person = {
+            name,
+            city,
+            year,
+        };
+        Object.setPrototypeOf(person, personPrototype);
+        return person;
+      };
+      const person1 = createPerson("Linus Torvalds", "Helsinki", 1969);
+      const person2 = createPerson("Bill Gates", "Seattle", 1955);
+  - A função construtora retorna um novo objeto ao ser invocada por meio do operador new
+    Ex.:
+    // Script do operador new
+    const _new = function(fn, ...params) {
+      const obj = {};
+      Object.setPrototypeOf(obj, fn.prototype);
+      fn.apply(obj, params);
+      return obj;
+    };
+      const Person = function(name, city, year) {
+        this.name = name;
+        this.city = city;
+        this.year = year;
+        this.getAge = function() {
+          return (new Date()).getFullYear() - this year;
+        }
+      };
+      const person1 = _new(Person, "Linus Torvalds", "Helsinki", 1969);
+      const person2 = _new(Person, "Bill Gates", "Seattle", 1955);
+  - Toda função tem uma propriedade chamada prototype, que é vinculada ao __proto__ do objeto criado pelo operador new
+    Ex.:
+      const Person = function(name, city, year) {
+        this.name = name;
+        this.city = city;
+        this.year = year;
+      };
+      Person.prototype.getAge = function() {
+          return (new Date()).getFullYear() - this year;
+        }
+      const person1 = new Person("Linus Torvalds", "Helsinki", 1969);
+      const person2 = new Person("Bill Gates", "Seattle", 1955);
+  - CUIDADO! Não esqueça de utilizar o operador new quando utilizar funções construtoras
