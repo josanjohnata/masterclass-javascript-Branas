@@ -292,3 +292,46 @@
     console.log(date _instanceof Date); -> true
     console.log(date _instanceof Object); -> true
     console.log(date _instanceof Array); -> false
+
+# Arrow Function
+  - As arrow functions tem uma abordagem mais simples e direta para escrever uma função e podem melhorar a legibilidade do 
+    código em diversas situações
+    Ex.: 
+      const sum = (a, b) => {
+        return a + b;
+      };
+      const subtract = (a, b) => a - b; (também é possível declarar uma arrow function em uma linha sem as chaves ({}) nesse caso o return é automático)
+
+      const calculator = (fn) => {
+        return (a, b) => {
+          return fn(a, b);
+        };
+      };
+      console.log(calculator(sum)(2, 2)); -> 4
+      console.log(calculator(subtract)(2, 2)); -> 0
+  - CUIDADO! As arrow functions não possuem as suas próprias variáveis this e arguments
+    Ex.:
+      const person = {
+        name: "James Gosling",
+        city: "Alberta",
+        year: 1955,
+        getAge: () => {
+          return (new Date()).getFullYear() - this.year;
+        }
+      };
+      console.log(person); -> { name: "James Gosling", city: "Alberta", year: 1955, getAge: [Function: getAge] };
+      console.log(person.getAge()); -> NaN
+    Ex.:
+      const sum = () => {
+        let total = 0;
+        for (let argument in arguments) {
+          total += arguments[argument];
+        }
+        return total;
+      };
+      console.log(sum(1, 2, 3, 4, 5, 6, 7, 8, 9)); -> ERROR
+  - E se um objeto for retornado?
+    Ex.:
+      const createPerson = (name, city, year) => ({name, city, year});
+      const person = createPerson("Alan Kay", "Springfield", 1940);
+      console.log(person); -> { name: "Alan Kay", city: "Springfield", year: 1940 }
