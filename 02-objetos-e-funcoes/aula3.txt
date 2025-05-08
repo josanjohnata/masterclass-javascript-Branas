@@ -294,13 +294,14 @@
     console.log(date _instanceof Array); -> false
 
 # Arrow Function
-  - As arrow functions tem uma abordagem mais simples e direta para escrever uma função e podem melhorar a legibilidade do 
-    código em diversas situações
+  - As arrow functions tem uma abordagem mais simples e direta para escrever uma função e podem melhorar a
+   legibilidade do código em diversas situações
     Ex.: 
       const sum = (a, b) => {
         return a + b;
       };
-      const subtract = (a, b) => a - b; (também é possível declarar uma arrow function em uma linha sem as chaves ({}) nesse caso o return é automático)
+      const subtract = (a, b) => a - b; (também é possível declarar uma arrow function em uma linha sem as 
+      chaves ({}) nesse caso o return é automático)
 
       const calculator = (fn) => {
         return (a, b) => {
@@ -337,7 +338,8 @@
       console.log(person); -> { name: "Alan Kay", city: "Springfield", year: 1940 }
 
 # Execution Context
-  - O Execution Context é o ambiente onde o código é executado, sendo composto pelo variable object, scope chain e this
+  - O Execution Context é o ambiente onde o código é executado, sendo composto pelo variable object, scope 
+    chain e this
     Ex.:
       const v1 = 10;
       const fn1 = function() {
@@ -396,3 +398,69 @@
         }
       };
       console.log(obj1.getP1()); -> 10
+
+# Closures
+  - Na linguagem JavaScript, toda função permite a utilização de variáveis que não foram declaradas e nem 
+    passadas por parâmetro
+    Ex.:
+      const v1 = 10;
+      function fn1() {
+        function fn2 () {
+          console.log(v1);
+        };
+        fn2();
+      };
+      fn1();
+  - O problema é que como as funções são de primeira classe, dependendo da situação poderia existir uma 
+    ambiguidade e isso foi resolvido com o conceito de closure
+    Ex.:
+      function fn1() {
+        const v1 = 10;
+        return function() {
+          console.log(v1);
+        };
+      };
+      const fn2 = fn1();
+      const v1 = 100;
+      fn2(); -> 10
+  - Resumindo, closure é uma função com um scope chain estático que é definida no momento em que a função é 
+    criada, por isso, todas as funções na linguagem JavaScript são closures
+    Ex.:
+      const v1 = 10;
+      function fn1() {
+        console.log(v1);
+      };
+      function fn2(fn1) {
+        const v1 = 100;
+        fn1();
+      };
+      fn2(fn1); -> 10
+  - Apesar de ser estático, o scope chain faz referência para objetos que estão na memória e podem ser 
+    compartilhados por mais de uma função
+    Ex.:
+      function fn1() {
+        let v1 = 10;
+        return {
+          m1() {
+            console.log(++v1);
+          },
+          m2() {
+            console.log(--v1);
+          }
+        };
+      };
+      const obj1 = fn1();
+      obj1.m1(); -> 11
+      obj1.m2(); -> 10
+    -------------------------------
+      const obj1 = {};
+      for (var v1 = 0; v1 < 3; v1++) {
+        obj1[v1] = (function (v2) {
+          return function () {
+            console.log(v2);
+          }
+        })(v1);
+      };
+      obj1[0](); -> 0
+      obj1[1](); -> 1
+      obj1[2](); -> 2
