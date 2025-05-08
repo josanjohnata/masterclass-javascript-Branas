@@ -335,3 +335,64 @@
       const createPerson = (name, city, year) => ({name, city, year});
       const person = createPerson("Alan Kay", "Springfield", 1940);
       console.log(person); -> { name: "Alan Kay", city: "Springfield", year: 1940 }
+
+# Execution Context
+  - O Execution Context é o ambiente onde o código é executado, sendo composto pelo variable object, scope chain e this
+    Ex.:
+      const v1 = 10;
+      const fn1 = function() {
+        const fn2 = function() {
+          console.log(v1);
+        };
+        fn2();
+      };
+      fn1();
+  - Não é possível acessar de fora uma variável que foi declarada dentro de uma função
+    Ex.:
+      const v1 = 10;
+      const fn1 = function() {
+        const fn2 = function() {
+          console.log(v1);
+          const v2 = 1000;
+        };
+        fn2();
+      };
+      fn1();
+      console.log(v2); -> Error: v2 is not defined
+  - Toda função tem uma variável this que contém a referência para o objeto responsável pela sua invocação
+    Ex.:
+      const obj1 = {
+        p1: 10,
+        getP1: function() {
+          const fn1 = function() {
+            return this.p1;
+          }
+          return fn1();
+        }
+      };
+      console.log(obj1.getP1()); -> undefined
+    - Para ter a referencia this do obj1
+      Ex.:
+        const obj1 = {
+        p1: 10,
+        getP1: function() {
+          const that = this;
+          const fn1 = function() {
+            return that.p1;
+          }
+          return fn1();
+        }
+      };
+      console.log(obj1.getP1()); -> 10
+      - ou nesse caso a arrow function também funciona
+        Ex.:
+        const obj1 = {
+        p1: 10,
+        getP1: function() {
+          const fn1 = () => {
+            return this.p1;
+          }
+          return fn1();
+        }
+      };
+      console.log(obj1.getP1()); -> 10
