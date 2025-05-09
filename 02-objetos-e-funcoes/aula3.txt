@@ -482,7 +482,7 @@
       }
       try {
         const rectangle = new Rectangle(-10, -2);
-        console.log(rectangle.calculateArea()); -> ERROR: Invalid value for x or y
+        console.log(rectangle.calculateArea());
       } catch (e) {
         console.log(e); -> ERROR: Invalid value for x or y
       }
