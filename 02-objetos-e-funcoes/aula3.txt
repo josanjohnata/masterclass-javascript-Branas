@@ -486,3 +486,58 @@
       } catch (e) {
         console.log(e); -> ERROR: Invalid value for x or y
       }
+
+# Destructuring
+  - Por meio do Destructuring podemos extrair valores de arrays e objetos de uma forma mais simples e direta
+  - É possível extrair os valores de um array criando variáveis em ordem, de acordo com a posição de cada elemento
+  Ex.:
+    const language = "C;Dennis Ritchie;1972".split(";");
+    const name = language[0];
+    const author = language[1];
+    const year = language[2];
+    console.log(name, author, year);
+  - Podemos ignorar um elemento do array deixando de estabelecer um nome para a variável
+    Ex.:
+      const [, author, year] = "C;Dennis Ritchie;1972".split(";");
+      console.log(author, year)
+  - Assim como nas funções, é possível definir valores padrão para cada uma das variáveis
+    Ex.:
+      const language = "C;Dennis Ritchie;1972".split(";");
+      const [name = "-", author = "-", year = "-"] = language;
+      console.log(name, author, year);
+  - Para extrair os valores de um objeto é necessário referenciar a chave de cada uma das propriedades
+    Ex.:
+      const language = {
+        name: "C",
+        author: "Dennis Ritchie",
+        year: 1972
+      };
+      const {name, author, year} = language;
+      console.log(name, author, year);
+  - É possível definir nomes diferentes para as variáveis em relação as chaves das propriedades do objeto
+    Ex.:
+      const language = {
+        name: "C",
+        author: "Dennis Ritchie",
+        year: 1972
+      };
+      const {name: n, author: a, year: y} = language;
+      console.log(n, a, y);
+  - Também podemos referenciar as propriedades de objetos que estão dentro de outros objetos
+    Ex.:
+      const language = {
+        name: "C",
+        author: "Dennis Ritchie",
+        year: 1972,
+        company: {
+          name: "Bell Labs"
+        }
+      };
+      const {name: n, author: a, year: y, company: {name: c}} = language;
+      console.log(n, a, y, c);
+  - Podemos aplicar destructuring também nos parâmetros de uma função, tanto com arrays quanto com objetos
+    Ex.:
+      const sum = function({a, b}) {
+        return a + b;
+      };
+      console.log(sum({a: 2, b: 2}));
