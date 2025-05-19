@@ -16,15 +16,82 @@
         console.log(numbers); -> [ <10 empty items> ]
   - A propriedade length indica a quantidade de elementos que existem dentro do Array
       Ex.:
-      const languages = [];
-      languages[0] = "Python";
-      languages[1] = "C";
-      languages[2] = "Java";
-      console.log(languages); -> [ 'Python', 'C', 'Java' ]
-      console.log(languages.length); -> 3
+        const languages = [];
+        languages[0] = "Python";
+        languages[1] = "C";
+        languages[2] = "Java";
+        console.log(languages); -> [ 'Python', 'C', 'Java' ]
+        console.log(languages.length); -> 3
   - Os elementos vazios dentro do Array não são considerado no length
       Ex.:
         const languages = ["Python", "C", "Java"];
         delete languages[1];
         console.log(languages); -> [ 'Python', <1 empty item>, 'Java' ]
         console.log(languages.length); -> 3
+
+# Array Mutator API
+  - Os mutator methods quando invocados modificam o array
+    - push: Adiciona um elemento no final
+    - pop: Remove um elemento do final
+    - unshift: Adiciona um elemento no início
+    - shift: Remove um elemento no início
+    - splice: Remove, substitui ou adiciona um ou mais elementos em uma determinada posição
+    - sort: Ordena os elementos de acordo com a função de ordenação
+    - reverse: Inverte a ordem dos elementos
+    - fill: Preenche ps elementos de acordo com a posição de início e fim
+
+    Ex.:
+      const languages = ["Python", "C", "Java"];
+      console.log(languages); -> [ 'Python', 'C', 'Java' ]
+      console.log(languages.push("Go")); -> 4 (ele retorna um novo length)
+      console.log(languages); -> [ 'Python', 'C', 'Java', 'Go' ]
+      console.log(languages.pop()); -> Go (ele retorna o ultimo elemento que está sendo removido)
+      console.log(languages); -> [ 'Python', 'C', 'Java' ]
+      console.log(languages.unshift("Go")); -> 4 (ele retorna um novo length)
+      console.log(languages); -> [ 'Go', 'Python', 'C', 'Java' ]
+      console.log(languages.shift); -> Go (ele retorna o primerio elemento que está sendo removido)
+      console.log(languages); -> [ 'Python', 'C', 'Java' ]
+      console.log(languages.splice(1, 1)); -> [ 'C' ] (nesse caso ele recebe dois parametros, o primeiro é a posição 
+        do elemento que deseja remover e o segundo é a quantidade de elementos. Então ele retorna um array 
+        de elementos removidos)
+      console.log(languages); -> [ 'Python', 'Java' ]
+      console.log(languages.splice(1, 0, "C++", "C#")); -> [] (nesse caso como o segundo parametro é 0, ele está criando
+        um elemento na posição 1 e adiciona o C++ e o C#)
+      console.log(languages); -> [ 'Python', 'C++', 'C#', 'Java' ]
+      console.log(languages.splice(1, 2, "C")); -> [] (nesse caso estamos removendo 2 elementos a partir da posição 1 de 
+        adicionando o C na posição 1 novamente)
+      console.log(languages); -> [ 'Python', 'C', 'Java' ]
+      const languages = [
+        {
+          name: "Python",
+          year: 1991
+        },
+        {
+          name: "C",
+          year: 1972
+        },
+        {
+          name: "Java",
+          year: 1995
+        }
+      ];
+      languages.sort(function(a, b) {
+        return a.year - b.year;
+      });
+      console.log(languages); -> [ {name: 'C', year: 1972}, {name: 'Python', year: 1991}, {name: 'Java', year: 1995} ] (nesse caso foi ordenado pelo ano)
+      languages.sort(function(a, b) {
+        return (a.name <= b.name) ? -1 : 1;
+      });
+      languages.sort(function(a, b) {
+        return a.name.localeCompare(b.name); (o localeCompare já retorna o 1 ou -1, essa função é uma novidade do javascript)
+      });
+      console.log(languages); -> [ {name: 'C', year: 1972}, {name: 'Java', year: 1995}, {name: 'Python', year: 1991} ] (nesse caso foi ordenado pelo nome)
+      const languages = ["Python", "C", "Java"];
+      console.log(languages); -> [ 'Python', 'C', 'Java' ]
+      languages.reverse();
+      console.log(languages); -> [ 'Java', 'C', 'Python' ]
+      const languages = ["Python", "C", "Java"];
+      languages.fill("JavaScript") (ele simplesmente preenche todo o array com o elemento determinado)
+      console.log(languages); -> [ 'JavaScript', 'JavaScript', 'JavaScript' ]
+      languages.fill("JavaScript", 1) (é possível passar um segundo parametro com a posição que deseja preencher a partir dessa posição)
+      console.log(languages); -> [ 'Java', 'JavaScript', 'JavaScript' ]
