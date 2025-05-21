@@ -155,3 +155,37 @@
         return total + framework.contributors;
       }, 0);
       console.log(result);
+
+# Array Accessor API
+  - Os accessor methods quando invocados retornam informações específicas sobre o array
+    - indexOf: Retorna a posição do primeiro elemento encontrado
+    - lastIndexOf: Retorna a posição do último elemento encontrado
+    - includes: Retorna true se o elemento existir
+    - concat: Retorna um novo array resultante da concatenação de um ou mais arrays
+    - slice: Retorna partes de um determinado array de acordo com a posição de início e fim
+    - join: Converte o array para uma String, juntando os elementos com base em um separador
+
+    Ex.:
+      const languages = ["Python", "C", "C", "Java"];
+      const ooLanguages = ["Smalltalk", "C++", "Simula"];
+      const functionalLanguages = ["Haskell", "Scheme"];
+
+      console.log(languages.indexOf("C")) -> 1
+      console.log(languages.indexOf("javascript")) -> -1
+      console.log(languages.lastIndexOf("C")) -> 2
+      console.log(languages.includes("C")) -> true
+      console.log(languages.includes("javascript")) -> false
+
+      const languagesConcat = ooLanguages.concat(functionalLanguages);
+      const languagesConcat2 = [].concat(ooLanguages, functionalLanguages);
+      console.log(languagesConcat); -> [ 'Smalltalk', 'C++', 'Simula', 'Haskell', 'Scheme' ]
+      console.log(languagesConcat2); -> [ 'Smalltalk', 'C++', 'Simula', 'Haskell', 'Scheme' ]
+
+      const languages = ["Smalltalk", "C++", "Simula", "Haskell", "Scheme"];
+      console.log(languages.slice(0, 2)); -> [ 'Smalltalk', 'C++' ]
+      console.log(languages.slice(2, 4)); -> [ 'Simula', 'Haskell' ]
+      console.log(languages.slice(1)); -> [ 'C++', 'Simula', 'Haskell', 'Scheme' ]
+      
+      console.log(languages.join(";")); -> Smalltalk;C++;Simula;Haskell;Scheme
+      console.log(languages.join(",")); -> Smalltalk,C++,Simula,Haskell,Scheme
+      console.log(languages.join("")); -> SmalltalkC++SimulaHaskellScheme
