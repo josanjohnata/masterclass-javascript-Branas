@@ -51,11 +51,11 @@
       console.log(languages); -> [ 'Go', 'Python', 'C', 'Java' ]
       console.log(languages.shift); -> Go (ele retorna o primerio elemento que está sendo removido)
       console.log(languages); -> [ 'Python', 'C', 'Java' ]
-      console.log(languages.splice(1, 1)); -> [ 'C' ] (nesse caso ele recebe dois parametros, o primeiro é a posição 
+      console.log(languages.splice(1, 1)); -> [ 'C' ] (nesse caso ele recebe dois parâmetros, o primeiro é a posição 
         do elemento que deseja remover e o segundo é a quantidade de elementos. Então ele retorna um array 
         de elementos removidos)
       console.log(languages); -> [ 'Python', 'Java' ]
-      console.log(languages.splice(1, 0, "C++", "C#")); -> [] (nesse caso como o segundo parametro é 0, ele está criando
+      console.log(languages.splice(1, 0, "C++", "C#")); -> [] (nesse caso como o segundo parâmetro é 0, ele está criando
         um elemento na posição 1 e adiciona o C++ e o C#)
       console.log(languages); -> [ 'Python', 'C++', 'C#', 'Java' ]
       console.log(languages.splice(1, 2, "C")); -> [] (nesse caso estamos removendo 2 elementos a partir da posição 1 de 
@@ -93,5 +93,65 @@
       const languages = ["Python", "C", "Java"];
       languages.fill("JavaScript") (ele simplesmente preenche todo o array com o elemento determinado)
       console.log(languages); -> [ 'JavaScript', 'JavaScript', 'JavaScript' ]
-      languages.fill("JavaScript", 1) (é possível passar um segundo parametro com a posição que deseja preencher a partir dessa posição)
+      languages.fill("JavaScript", 1) (é possível passar um segundo parâmetro com a posição que deseja preencher a partir dessa posição)
       console.log(languages); -> [ 'Java', 'JavaScript', 'JavaScript' ]
+
+# Array Iteration API
+  - iteration methods quando invocados iteram sobre os elementos do array
+    - forEach: Executa a função passada por parâmetro para cada elemento
+    - filter: Retorna um novo array contendo somente os elementos que retornaram true na função passada por parâmetro
+    - find: Retorna o primeiro elemento que retornou true na função passada por parâmetro
+    - some: Retorna true se um ou mais elementos retornaram true na função passada por parâmetro
+    - every: Retorna true se todos os elementos retornaram true na função passada por parâmetro
+    - map: Retorna um novo array com base no retorno da função passada por parâmetro
+    - reduce: Retorna um valor com base no retorno da função passada por parâmetro
+
+    Ex.:
+      const frameworks = ["Angular.js", "Ember.js", "Vue.js"];
+      frameworks.forEach((framework) => {
+        console.log(framework) -> (vai retornar todos os itens do array, um por vez)
+      })
+
+      const frameworks = [
+        {
+          name: "Angular.js",
+          contributors: 1548
+        },
+        {
+          name: "Ember.js",
+          contributors: 746
+        },
+        {
+          name: "Veu.js",
+          contributors: 240
+        }
+      ];
+      const result = frameworks.filter((framework) => {
+        return framework.contributors < 1000;
+      });
+      console.log(result); -> (vai retornar apenas os objetos que tiver o numeros de contribuidores menor que mil)
+
+      const result = frameworks.find((framework) => {
+        return framework.name === "Angular.js";
+      });
+      console.log(result); -> (vai retornar o primeiro item do array que tiver o name Angular.js)
+
+      const result = frameworks.some((framework) => {
+        return framework.name.includes("js");
+      });
+      console.log(result); -> (vai retornar true se pelo menos um dos name tiver js)
+      
+      const result = frameworks.every((framework) => {
+        return framework.contributors < 1000;
+      });
+      console.log(result); -> (vai retornar true se todos os contributors forem maior que mil)
+
+      const result = frameworks.map((framework) => {
+        return framework.name;
+      });
+      console.log(result); -> (vai retornar um novo array com apenas os names)
+
+      const result = frameworks.reduce((total, framework) => {
+        return total + framework.contributors;
+      }, 0);
+      console.log(result);
