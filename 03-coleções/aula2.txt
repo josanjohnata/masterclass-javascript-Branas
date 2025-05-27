@@ -1,0 +1,54 @@
+# Map
+  - Um Map é um objeto que armazena um conjunto de chaves e valores que podem ser de qualquer tipo de dado
+    Ex.:
+      const timeUnits = new Map([["second", 1], ["minute", 60], ["hour", 3600]]);
+      console.log(timeUnits); -> Map { 'second' => 1, 'minute' => 60, 'hour' => 3600 }
+      console.log(Array.from(timeUnits)); -> [ ['second', 1], ['minute', 60], ['hour', 3600] ] o Array.from() trás o objeto de volta para array
+
+  - Operações do Map
+    - size: Retorna a quantidade de elementos
+    - set: Adiciona um par de chave e valor
+    - forEach: Itera sobre o mapa
+    - has: Retorna true se a chave existir
+    - get: Retorna o valor de uma determinada chave
+    - delete: Remove um par de chave e valor
+    - clear: Remove todos os elementos
+    Ex.:
+      console.log(timeUnits.size()); -> 3
+      timeUnits.set("day", 86400);
+      console.log(timeUnits); -> Map { 'second' => 1, 'minute' => 60, 'hour' => 3600, 'day'=> 86400 }
+      timeUnits.forEach((key, value) {
+        console.log(key, value); -> 1 'second', 60 'minute', 3600 'hour', 86400 'day' (quando o forEach itera no objeto, ele retorna primeiro o valor e depois a chave)
+      });
+      console.log(timeUnits.has("hour")); -> true
+      console.log(timeUnits.has("month")); -> false
+      console.log(timeUnits.get("second")); -> 1
+      console.log(timeUnits.get("month")); -> undefined
+      timeUnits.delete("day");
+      console.log(timeUnits); -> Map { 'second' => 1, 'minute' => 60, 'hour' => 3600 }
+      timeUnits.clear();
+      console.log(timeUnits); -> Map {}
+  - Qual é a diferença do Map para um objeto?
+    - Uma das principais diferença entre o Map e o Object é que as chaves do Map pode ser de qualquer valor e o Object não, apenas
+      do tipo String ou Symbol.
+      Ex.:
+      - Como o Object so pode ser do tipo String e Symbol, quando existir outro tipo, será convertido para String
+        const obj = {};
+        obj[10] = "Number";
+        obj["10"] = "String"
+        obj[true] = "Boolean"
+        obj["true"] = "String"
+        console.log(obj[10]); -> String
+        console.log(obj["10"]); -> String
+        console.log(obj[true]); -> String
+        console.log(obj["true"]); -> String
+
+        const map = new Map();
+        map.set(10, "Number");
+        map.set("10", "String");
+        map.set(true, "Boolean");
+        map.set("true", "String");
+        console.log(map.get(10)); -> Number
+        console.log(map.get("10")); -> String
+        console.log(map.get(true)); -> Boolean
+        console.log(map.get("true")); -> String
