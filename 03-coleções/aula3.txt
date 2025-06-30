@@ -1,0 +1,60 @@
+# Set
+  - Um Set é um objeto que armazena elementos únicos, que podem ser de qualquer tipo de dado
+  Propriedades e Operações:
+    - size: Retorna a quantidade de elementos
+    - add: Adiciona um elemento
+    - forEach: Itera sobre o set
+    - has: Retorna true se o elemento existir
+    - delete: Remove um elemento
+    - clear: Remove todos os elementos
+  Ex.:
+    const charsets = new Set([ 'ASCII', 'ISO-8859-1', 'UTF-8' ]);
+    console.log(charsets); -> Set { 'ASCII', 'ISO-8859-1', 'UTF-8' }
+    // caso queira voltar para um array
+    console.log(Array.from(charsets)); -> Set [ 'ASCII', 'ISO-8859-1', 'UTF-8' ]
+
+    charsets.add("ASCII");
+    charsets.add("ISO-8859-1");
+    charsets.add("UTF-8");
+    console.log(charsets); -> Set { 'ASCII', 'ISO-8859-1', 'UTF-8' }
+    console.log(charsets.size); -> 3
+    charsets.forEach(function (charset) {
+      console.log(charset); -> ASCII
+                               ISO-8859-1
+                               UTF-8
+    });
+    console.log(charsets.has("ASCII")); -> true
+    console.log(charsets.has("CP-1252")); -> false
+    console.log(charsets.delete("ISO-8859-1")); -> true (O delete retorna true quando consegue deletar o item e false nao não consegue deletar o item)
+    console.log(charsets.delete("CP-1252")); -> false
+    charsets.clear()
+    console.log(charsets) -> Set {}
+
+    Qual a diferença de um Set para um Array?
+    - Basicamente a diferença é não permitir dados duplicados
+    Ex.:
+      const array = [];
+      array.push(10);
+      array.push(10);
+      array.push(10);
+      console.log(array); -> [ 10, 10, 10 ]
+      console.log(array.length); -> 3
+
+      const set = new Set;
+      set.add(10);
+      set.add(10);
+      set.add(10);
+      console.log(set); -> { 10 }
+      console.log(set.size); -> 1
+      // Porém o set pode deletar elementos duplicados de um array
+      let array2 = [ 10, 10, 10 ];
+      console.log(array2); -> [ 10, 10, 10 ]
+      console.log(array2.length); -> 3
+
+      const set2 = new Set(array2);
+      console.log(set); -> { 10 }
+      console.log(set.size); -> 1
+      // trazendo o array do set
+      array2 = Array.from(set);
+      console.log(array2); -> [ 10 ]
+      console.log(array2.length); -> 1
