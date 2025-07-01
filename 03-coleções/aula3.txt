@@ -58,3 +58,43 @@
       array2 = Array.from(set);
       console.log(array2); -> [ 10 ]
       console.log(array2.length); -> 1
+
+# WeakSet
+  - WeakSet é um objeto, similar ao Set, que permite apenas valores do tipo Object e mantém as referências de forma fraca, sendo volátil e não iterável
+    Operações:
+      - add: Adiciona um elemento
+      - has: Retorna true se o elemento existir
+      - delete: Remove um elemento
+    Ex.:
+      const ws1 = new WeakSet();
+      console.log(ws1); -> WeakSet {} (ele so aceita o tipo Object, quando se tenta atribuir um tipo diferente ele retorna um erro)
+
+      const obj1 = {};
+      const obj2 = {};
+      ws1.add(obj1);
+      ws1.add(obj2);
+      console.log(ws1.delete(obj1)); -> true (ele retorna true porque ele conseguiu deletar o elemento)
+      console.log(ws1.has(obj1)); -> false
+      console.log(ws1.has(obj2)); -> true
+
+      Para que serve um WeakSet?
+        - Ele serve para criar coleções de elementos onde não teremos uma preocupação com possiveis memories leaks (vazamentos de memórias), porque será 
+          possível adiciona muitas vezes uma grande quantidade de elementos, e no momento em que esses elementos (objetos) se torne não mais referenciados
+          eles se tornam elegiveis para coleta o garbage collection os tiram da memória e não vamos nos preocupar de remover da memória esse tipo de 
+          estrutura de dados.
+      
+      const circles = new WeakSet();
+      function Circle(radius) {
+        circles.add(this);
+        this.radius = radius;
+      };
+      Circle.prototype.calculateArea = function() {
+        if (!circles.has(this)) throw "Invalid Object";
+        return Math.PI * Math.pow(this.radius, 2);
+      }
+      const circle1 = new Circle(10);
+      const circle2 = {
+        radius: 5
+      }
+      console.log(circle1.calculateArea()); -> 314.1592653589793
+      console.log(circle1.calculateArea.call(circle2)); -> 78.53981633974483
