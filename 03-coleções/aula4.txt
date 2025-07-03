@@ -1,0 +1,112 @@
+# Iterables e Iterators
+  - São convenções implementadas por Arrays, Maps, Sets e Strings que os tornam iteráveis por meio de um protocolo de iteração.
+    Ex.: (Para percorrer uma lista)
+      const languages = ["Fortran", "Lisp", "COBOL"];
+      fot (let i = 0; i < languages.length; i++) {
+        console.log(languages[i]);
+      };
+      or
+      for (let i in languages) {
+        console.log(languages[i]);
+      };
+      or
+      languages.forEach((language) => {
+        console.log(language);
+      });
+      or
+      for (let language of languages) {
+        console.log(language);
+      };
+
+      const classicLanguages = ["Fortran", "Lisp", "COBOL"];
+      const modernLanguages = ["Python", "Ruby", "JavaScript"];
+      // para juntar esses dois arrays em um único array com concat:
+      const languages = classicLanguages.concat(modernLanguages);
+      console.log(languages) -> ["Fortran", "Lisp", "COBOL", "Python", "Ruby", "JavaScript"];
+
+      // para juntar esses dois arrays em um único array com spread operator:
+      const languages = [...classicLanguages, ...modernLanguages];
+      console.log(languages) -> ["Fortran", "Lisp", "COBOL", "Python", "Ruby", "JavaScript"];
+
+  - Além do Array é possível utilizar o protocolo de iteração dos objetos Map, Set e String
+    Ex.:
+      const languages = new Map([["Fortran", 1957], ["Lisp", 1958], ["COBOL", 1959]]);
+      console.log(languages); -> {'Fortran' => 1957, 'Lisp' => 1958, 'COBOL' => 1959}
+      console.log([...languages]); -> [["Fortran", 1957], ["Lisp", 1958], ["COBOL", 1959]]
+
+      for (let language of languages) {
+        console.log(language); -> ["Fortran", 1957] ["Lisp", 1958] ["COBOL", 1959]
+      };
+
+      // também é possível fazer com o Set:
+      const languages = new Set(["Fortran", "Lisp", "COBOL"]);
+      console.log([...languages]); -> ["Fortran", "Lisp", "COBOL"]
+      for (let language 0f languages) {
+        console.log(language); -> Fortran, Lisp, COBOL
+      };
+
+      // também é possível percorrer cada caracter de uma string:
+      const language = "COBOL";
+      console.log([...language]); -> ['C', 'O', 'B', 'O', 'L']
+      for (let char of language) {
+        console.log(char); -> C, O, B, O, L
+      };
+  
+  - Todo Iterable tem uma propriedade de chave Symbol.iterator que define o protocolo de iteração para o objeto
+    Ex.:
+      const languages = ["Fortran", "Lisp", "COBOL"];
+      const iterator = languages[Symbol.iterator]();
+      console.log(iterator.next()); -> { value: 'Fortran', done false } (o value retorna o valor do elemento e o done 
+        retorna se já acabou todas as iterações, até chegar no último elemento o  próximo next a ser chamado irá 
+        retornar um value undefined e o done true, o iterator também é possível ser usado no Map, Set e String)
+  
+  - Um iterator pode ser iterável?
+    Ex.:
+      function createIterator(...array) {
+        let i = 0;
+        return {
+            next() {
+                if (i < array.length) {
+                    return {
+                        value: array[i++],
+                        done: false
+                    }
+                } else {
+                    return {
+                        value: undefined,
+                        done: true
+                    }
+                }
+            }
+        };
+      }
+      const iterator = createIterator("Fortran", "Lisp", "COBOL");
+      console.log(iterator.next());
+
+      function createIterable(...array) {
+        return {
+          [Symbol.iterator]() {
+            let i = 0;
+            return {
+                next() {
+                    if (i < array.length) {
+                        return {
+                            value: array[i++],
+                            done: false
+                        }
+                    } else {
+                        return {
+                            value: undefined,
+                            done: true
+                        }
+                    }
+                }
+            };
+          }
+        }
+      }
+      const iterable = createIterable("Fortran", "Lisp", "COBOL");
+      console.log([...iterable]);
+      for (let language of iterable) {
+        console.log(language);
+      };
