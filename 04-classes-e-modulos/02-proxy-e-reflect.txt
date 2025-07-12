@@ -1,0 +1,149 @@
+# Proxy e Reflect
+  - Um proxy é capaz de interceptar diversos tipos de operações em um objeto alvo
+    Ex.:
+      function createArray() {
+        return new Proxy({}, {});
+      };
+      const languages = createArray();
+
+      console.log(languages);
+  - Existem métodos, chamados de trap, para diversos tipos de eventos relacionados a um objeto como:
+    - apply
+    - construct
+    - defineProperty
+    - deleteProperty
+    - get
+    - getOenPropertyDescriptor
+    - getPrototypeOf
+    - has
+    - isExtensible
+    - ownKeys
+    - preventExtensions
+    - set
+    - setPrototypeOf
+  - O método set é invocado quando uma propriedade é definida no objeto
+    Ex.:
+      function createArray() {
+        return new Proxy({}, {
+          set(target, key, value) {
+            target.length = target.length || 0;
+            target.length++;
+            target[key] = value;
+          }
+        });
+      };
+      const languages = createArray();
+      languages[0] = 'Python';
+      languages[1] = 'Ruby';
+      languages[2] = 'JavaScript';
+      console.log(languages); -> {0: 'Python', 1: 'Ruby', 2: 'JavaScript', length: 3}
+      console.log(languages.length); -> 3
+  - O método deleteProperty é invocado quando uma propriedade é deletada
+    Ex.:
+      function createArray() {
+        return new Proxy({}, {
+          set(target, key, value) {
+            target.length = target.length || 0;
+            target.length++;
+            target[key] = value;
+          },
+
+          deleteProperty(target, key) {
+            if (key in target) {
+                target.length--;
+                delete target[key];
+            }
+          }
+        });
+      };
+      const languages = createArray();
+      languages[0] = 'Python';
+      languages[1] = 'Ruby';
+      languages[2] = 'JavaScript';
+      console.log(languages); -> {0: 'Python', 1: 'Ruby', 2: 'JavaScript', length: 3}
+      console.log(languages.length); -> 3
+      delete languages[1];
+      delete languages[2];
+      delete languages[3];
+      console.log(languages); -> {0: 'Python', length: 1}
+      console.log(languages.length); -> 1
+  - O método get é invocado quando uma propriedade é acessada
+    Ex.:
+      function createArray() {
+        return new Proxy({}, {
+          set(target, key, value) {
+            target.length = target.length || 0;
+            target.length++;
+            target[key] = value;
+          },
+
+          get(target, key) {
+            if (typeof key === "string" && key.match(/|d+/)) {
+              if (!(key in target)) {
+                throw `Property ${key} not found!`;
+              }
+            }
+            return target[key];
+          },
+
+          deleteProperty(target, key) {
+            if (key in target) {
+                target.length--;
+                delete target[key];
+            }
+          }
+        });
+      };
+      const languages = createArray();
+      languages[0] = 'Python';
+      languages[1] = 'Ruby';
+      languages[2] = 'JavaScript';
+      console.log(languages); -> {0: 'Python', 1: 'Ruby', 2: 'JavaScript', length: 3}
+      console.log(languages.length); -> 3
+      delete languages[1];
+      delete languages[2];
+      delete languages[3];
+      console.log(languages); -> {0: 'Python', length: 1}
+      console.log(languages.length); -> 1
+      console.log(languages[0]); - Python
+      console.log(languages[3]); - Property 3 not found!
+  - A Reflect API tem os mesmos métodos que existem no Proxy, permitindo a execução de diversos tipos de operações no objeto alvo
+    Ex.:
+      function createArray() {
+        return new Proxy({}, {
+          set(target, key, value) {
+            target.length = target.length || 0;
+            target.length++;
+            Reflect.set(target, key, value);
+          },
+
+          get(target, key) {
+            if (typeof key === "string" && key.match(/|d+/)) {
+              if (!(Reflect.has(target, key))) {
+                throw `Property ${key} not found!`;
+              }
+            }
+            return Reflect.get(target, key);
+          },
+
+          deleteProperty(target, key) {
+            if (Reflect.has(target, key)) {
+                target.length--;
+                Reflect.deleteProperty(target, key);
+            }
+          }
+        });
+      };
+      const languages = createArray();
+      languages[0] = 'Python';
+      languages[1] = 'Ruby';
+      languages[2] = 'JavaScript';
+      console.log(languages); -> {0: 'Python', 1: 'Ruby', 2: 'JavaScript', length: 3}
+      console.log(languages.length); -> 3
+      delete languages[1];
+      delete languages[2];
+      delete languages[3];
+      console.log(languages); -> {0: 'Python', length: 1}
+      console.log(languages.length); -> 1
+      console.log(languages[0]); -> Python
+      console.log(languages[3]); -> Property 3 not found!
