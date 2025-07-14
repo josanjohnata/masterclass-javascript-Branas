@@ -1,0 +1,100 @@
+# Promises
+  - As promises são objetos responsáveis por modelar comportamento assíncrono, permitindo o seu tratamento de uma forma mais fácil e direta
+    Ex.:
+      function sum(a, b, callback) {
+        setTimeout(function() {
+          callback(a + b);
+        }, 1000);
+      };
+      sum(2, 2, function(result) {
+        console.log(result); -> 4 (depois de um segundo)
+      });
+  - Para criar uma promise basta instanciá-la, executando a função resolve em caso de sucesso, sendo tratado por meio de then
+    Ex.:
+      function sum(a, b) {
+        return new Promise(function (resolve) {
+          setTimeout(function() {
+            resolve(a + b);
+          }, 1000);
+        });
+      };
+      sum(2, 2).then(function(result) {
+        console.log(result); -> 4 (depois de um segundo)
+      });
+  - Em caso de fracasso, a função reject deve ser executada, sendo tratada por meio de catch
+    Ex.:
+      function sum(a, b) {
+        return new Promise(function (resolve, reject) {
+          if (!a || !b) return reject("Invalid input");
+          setTimeout(function() {
+            resolve(a + b);
+          }, 1000);
+        });
+      };
+      sum(2).then(function(result) {
+        console.log(result);
+      }).catch(function(e) {
+        return console.log(e); -> Invalid input
+      });
+  - É possível centralizar o tratamento de uma promise encadeando seus retornos
+    Ex.:
+      function sum(a, b) {
+        return new Promise(function (resolve, reject) {
+          if (!a || !b) return reject("Invalid input");
+          setTimeout(function() {
+            resolve(a + b);
+          }, 1000);
+        });
+      };
+      sum(2, 2).then(function(a) {
+        return sum(4, 4).then(function(b) {
+          return sum ().then(function(result) {
+            console.log(result);
+          });
+        });
+      }).catch(function(e) {
+        return console.log(e); -> Invalid input
+      });
+  - Podemos executar várias promises ao mesmo tempo, retornando após todas terem sucesso usando Promise.all
+    Ex.:
+      function sum(a, b) {
+        return new Promise(function (resolve, reject) {
+          if (!a || !b) return reject("Invalid input");
+          setTimeout(function() {
+            resolve(a + b);
+          }, 1000);
+        });
+      };
+
+      Promise.all([
+        sum(2, 2),
+        sum(4, 4),
+      ]).then(function(values) {
+        console.log(values);
+      }).catch(function(e) {
+        return console.log(e); -> Invalid input
+      });
+  - Também podemos executar várias promises ao mesmo tempo, retornando após a primeira ter sucesso usando Promise.race
+    Ex.:
+      function sum(a, b) {
+        return new Promise(function (resolve, reject) {
+          if (!a || !b) return reject("Invalid input");
+          setTimeout(function() {
+            resolve(a + b);
+          }, Math.random() * 1000);
+        });
+      };
+
+      console.time('performance');
+      Promise.all([
+        sum(2, 2),
+        sum(4, 4),
+      ]).then(function(value) {
+        console.log(value);
+        return sum(value, value).then(function(result) {
+          console.log(result);
+          console.timeEnd('performance');
+        })
+      }).catch(function(e) {
+        return console.log(e);
+      });
