@@ -1,0 +1,195 @@
+# Generators
+  - Os generators tornam possível pausar a execução de uma determinada função, permitindo a utilização do 
+    event loop de forma cooperativa
+    Ex.: 
+      function* forever() {
+        let value = 1;
+        while (true) {
+          console.log(value++);
+        }
+      };
+
+      function today() {
+        const date = new Date();
+        console.log(date);
+      };
+
+      const foreverGenerator = forever();
+      console.log(foreverGenerator); -> {}
+      console.log(typeof foreverGenerator); -> object
+      today();
+  - Os generators utilizam o método next para iterar sobre os valores disponíveis durante a execução da função
+    Ex.: 
+      function* forever() {
+        let value = 1;
+        while (true) {
+          console.log(value++);
+        }
+      };
+
+      function today() {
+        const date = new Date();
+        console.log(date);
+      };
+
+      const foreverGenerator = forever();
+      foreverGenerator.next(); // só assim que a função será chamada
+      today();
+  - Ao encontrar um yield, a execução da função é pausada até o método next ser invocado novamente
+    Ex.: 
+      function* forever() {
+        let value = 1;
+        while (true) {
+          console.log(value++); -> 1
+          yield;
+        }
+      };
+
+      function today() {
+        const date = new Date();
+        console.log(date);
+      };
+
+      const foreverGenerator = forever();
+      foreverGenerator.next();
+      today();
+  - O retorno do método next é um objeto contendo value e done, seguindo o protocolo de iteração
+    Ex.: 
+      function* forever() {
+        let value = 1;
+        while (true) {
+          console.log(value++); -> 1
+          yield;
+        }
+      };
+
+      function today() {
+        const date = new Date();
+        console.log(date);
+      };
+
+      const foreverGenerator = forever();
+      console.log(foreverGenerator.next()); -> { value: undefined, done: false }
+      today();
+  - Por meio do yield é possível retornar valores de forma similar ao return
+    Ex.: 
+      function* forever() {
+        let value = 1;
+        while (true) {
+          yield value++;
+        }
+      };
+
+      function today() {
+        const date = new Date();
+        console.log(date);
+      };
+
+      const foreverGenerator = forever();
+      console.log(foreverGenerator.next()); -> { value: 1, done: false }
+      today();
+  - Além disso, também é possível enviar um valor para dentro do generator por meio do método next
+    Ex.: 
+      function* forever() {
+        let value = 1;
+        while (true) {
+          const reset = yield value++;
+          if (reset) value = 1;
+        }
+      };
+
+      function today() {
+        const date = new Date();
+        console.log(date);
+      };
+
+      const foreverGenerator = forever();
+      console.log(foreverGenerator.next(true)); -> { value: 1, done: false }
+      today();
+  - O método return encerra o generator podendo retornar um valor específico
+    Ex.: 
+      function* forever() {
+        let value = 1;
+        while (true) {
+          const reset = yield value++;
+          if (reset) value = 1;
+        }
+      };
+
+      function today() {
+        const date = new Date();
+        console.log(date);
+      };
+
+      const foreverGenerator = forever();
+      console.log(foreverGenerator.return()); -> { value: undefined, done: true }
+      today();
+  - O método throw lança uma exceção dentro do generator interrompendo o fluxo de execução caso a exceção
+    não tenha sido tratada adequadamente
+    Ex.: 
+      function* forever() {
+        let value = 1;
+        while (true) {
+          try {
+            const reset = yield value++;
+            if (reset) value = 1;
+          } catch (e) {
+            console.log(e);
+          }
+        }
+      };
+
+      function today() {
+        const date = new Date();
+        console.log(date);
+      };
+
+      const foreverGenerator = forever();
+      console.log(foreverGenerator.throw("Error")); -> Error
+      today();
+  - Como os generators implementam o protocolo de iteração é possível utilizá-los com Symbol.iterator de
+    forma simples
+    Ex.:
+      function createIterable(...array) {
+        return {
+          *[Symbol.iterator]() {
+            let i = 0;
+            while (i < array.length) {
+              yield array[i++];
+            }
+          };
+        }
+      };
+      const languages = createIterable("Fortran", "Lisp", "COBOL");
+      for (let language of languages) {
+        console.log(language);
+      }
+  - Além disso, é possível utilizar generators para sincronizar chamadas assíncronas de forma similar ao async/await
+    Ex.:
+      function sum(a, b) {
+        return new Promise(function(resolve) {
+          setTimeout(function() {
+            resolve(a + b);
+          }, 1000);
+        });
+      };
+
+      function async(fn) {
+        const gen = fn();
+        asyncR(gen);
+      };
+
+      function asyncR(gen, result) {
+        const obj = gen.next(result);
+        if (obj.done) return;
+        obj.value.then(function(result) {
+          asyncR(gen, result);
+        })
+      };
+
+      async(function* () {
+        const a = yield sum(2, 2);
+        const b = yield sum(4, 4);
+        const result = yield sum(a, b);
+        console.log(result);
+      });
