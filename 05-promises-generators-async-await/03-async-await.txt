@@ -1,0 +1,79 @@
+# Async/Await
+  - O async/await facilita a interação com chamadas assíncronas, aguardando o retorno de uma determinada promise
+     Ex.:
+      function sum(a, b) {
+        return new Promise(function(resolve, reject) {
+          if (!a || !b) return reject("Invalid input");
+          setTimeout(function() {
+            resolve(a + b);
+          }, 1000);
+        });
+      };
+
+      (async function() {
+        try {
+          const a = sum(2 ,2);
+          const b = sum(4 ,4);
+          const result = sum(a ,b);
+          console.log(result);
+        } catch (e) {
+          console.log(e);
+        }
+      })();
+  - É possível fazer interações com async/await?
+    Ex.:
+      function sum(a, b) {
+        return new Promise(function(resolve, reject) {
+          if (!a || !b) return reject("Invalid input");
+          setTimeout(function() {
+            resolve(a + b);
+          }, 1000);
+        });
+      };
+
+      (async function() {
+        try {
+          const functions = [
+            sum(2 ,2),
+            sum(4 ,4)
+          ];
+          const results = [];
+          for (let fn of functions) {
+            const result = await fn;
+            results.push(result);
+          }
+          const [a, b] = results;
+          const result = await sum(a ,b);
+          console.log(result);
+        } catch (e) {
+          console.log(e);
+        }
+      })();
+  - É possível utilizar o bloco for-await-of para iterar sobre um iterator de promises
+    Ex.:
+      function sum(a, b) {
+        return new Promise(function(resolve, reject) {
+          if (!a || !b) return reject("Invalid input");
+          setTimeout(function() {
+            resolve(a + b);
+          }, 1000);
+        });
+      };
+
+      (async function() {
+        try {
+          const functions = [
+            sum(2 ,2),
+            sum(4 ,4)
+          ];
+          const results = [];
+          for await (let fn of functions) {
+            results.push(result);
+          }
+          const [a, b] = results;
+          const result = await sum(a ,b);
+          console.log(result);
+        } catch (e) {
+          console.log(e);
+        }
+      })();
